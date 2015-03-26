@@ -20,6 +20,20 @@ class AmazonUtility
 		return file_get_contents($request);
 	}
 	
+	public static function ItemSearch($keyword, $searchIndex, $itemPage)
+	{
+		$request = AmazonUtility::AWSSignedRequest(
+			'com', array(
+			'Operation' => "ItemSearch",
+			'Keywords' => $keyword,
+			'SearchIndex' => $searchIndex,
+			'ResponseGroup' => "ItemIds",
+			'ItemPage' => $itemPage
+			));
+			
+		return file_get_contents($request);
+	}
+	
 	public static function AWSSignedRequest($region, $params, $version='2011-08-01')
 	{
 		/*
