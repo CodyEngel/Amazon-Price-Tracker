@@ -1,7 +1,22 @@
 <?php
-require_once("/model/AmazonUtility.class.php");
-require_once("/model/AmazonItem.class.php");
-require_once("/model/AmazonSearch.class.php");
+require_once("/includes/model/AmazonUtility.class.php");
+require_once("/includes/model/AmazonItem.class.php");
+require_once("/includes/model/AmazonSearch.class.php");
+
+$keyword = "";
+if(isset($_GET["keyword"]))
+{
+	$keyword = $_GET["keyword"];
+	$keyword = str_replace("+", " ", $keyword);
+	$amazon_search = new AmazonSearch($keyword);
+	//echo "Total Results: " . $amazon_search->TotalResults . "<br/>";
+}
+$request = AmazonUtility::AWSSignedRequest('com', array(
+			'Operation' => 'ItemLookup',
+			'ItemId' => "0385347405",
+			'ResponseGroup' => 'Large'
+			));
+echo "<!-- Amazon XML: ".$request."-->";
 /*
 	Test Item IDs
 
@@ -12,16 +27,11 @@ require_once("/model/AmazonSearch.class.php");
 // API Operations http://docs.aws.amazon.com/AWSECommerceService/latest/DG/CHAP_OperationListAlphabetical.html
 // API Request Limits - https://affiliate-program.amazon.com/gp/advertising/api/detail/faq.html
 
-$search_request = AmazonUtility::AWSSignedRequest(
-		'com', array(
-		'Operation' => "ItemSearch",
-		'Keywords' => "iphone 6",
-		'SearchIndex' => "All",
-		'ResponseGroup' => "ItemIds",
-		'ItemPage' => "1"
-		));
-		
-echo "<a href='".$search_request."'>Click Here!</a>";
+$request = AmazonUtility::AWSSignedRequest('com', array(
+			'Operation' => 'ItemLookup',
+			'ItemId' => "0385347405",
+			'ResponseGroup' => 'Large'
+			));
 
 //$Item1 = new AmazonItem(1479274836);
 //$Item2 = new AmazonItem("B00KI03U8Q");
@@ -45,5 +55,8 @@ $smarty = new Smarty;
 //$smarty->debugging = true;
 //$smarty->caching = true;
 //$smarty->cache_lifetime = 120;
+$smarty->assign("title", "");
+$smarty->assign("amazon_search", $amazon_search);
+$smarty->assign("search_keyword", $keyword);
 
 $smarty->display('index.tpl');

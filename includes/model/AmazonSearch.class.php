@@ -1,6 +1,6 @@
 <?php
-require_once("/model/AmazonUtility.class.php");
-require_once("/model/AmazonItem.class.php");
+require_once("/includes/model/AmazonUtility.class.php");
+require_once("/includes/model/AmazonItem.class.php");
 
 class AmazonSearch
 {
@@ -31,6 +31,9 @@ class AmazonSearch
 			case "SearchResultItems":
 				return $this->mSearchResultItems;
 				break;
+			case "TotalResults":
+				return count($this->mSearchResultItems);
+				break;
 		} // switch
 	} // get
 	
@@ -48,7 +51,6 @@ class AmazonSearch
 					$ASIN = $item->ASIN;
 					array_push($this->mSearchResultIds, $ASIN);
 					array_push($this->mSearchResultItems, new AmazonItem($ASIN));
-					usleep(10000);
 				}
 			}
 		}

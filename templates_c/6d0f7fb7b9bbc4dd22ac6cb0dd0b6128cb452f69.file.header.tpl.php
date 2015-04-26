@@ -1,33 +1,47 @@
-<?php /* Smarty version Smarty-3.1.21-dev, created on 2015-04-19 19:23:02
+<?php /* Smarty version Smarty-3.1.21-dev, created on 2015-04-25 17:38:23
          compiled from ".\templates\header.tpl" */ ?>
-<?php /*%%SmartyHeaderCode:29162553454aa045e66-02618716%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+<?php /*%%SmartyHeaderCode:26500553c256fe4a0d5-87682656%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
   array (
     '6d0f7fb7b9bbc4dd22ac6cb0dd0b6128cb452f69' => 
     array (
       0 => '.\\templates\\header.tpl',
-      1 => 1429492976,
+      1 => 1429996245,
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '29162553454aa045e66-02618716',
+  'nocache_hash' => '26500553c256fe4a0d5-87682656',
   'function' => 
   array (
   ),
-  'version' => 'Smarty-3.1.21-dev',
-  'unifunc' => 'content_553454aa045e67_35254486',
   'variables' => 
   array (
     'title' => 0,
-    'Name' => 0,
   ),
   'has_nocache_code' => false,
+  'version' => 'Smarty-3.1.21-dev',
+  'unifunc' => 'content_553c256fe4a0d2_77156452',
 ),false); /*/%%SmartyHeaderCode%%*/?>
-<?php if ($_valid && !is_callable('content_553454aa045e67_35254486')) {function content_553454aa045e67_35254486($_smarty_tpl) {?><HTML>
+<?php if ($_valid && !is_callable('content_553c256fe4a0d2_77156452')) {function content_553c256fe4a0d2_77156452($_smarty_tpl) {?><HTML>
 <HEAD>
-    <TITLE><?php echo $_smarty_tpl->tpl_vars['title']->value;?>
- - <?php echo $_smarty_tpl->tpl_vars['Name']->value;?>
-</TITLE>
+    <TITLE>
+    	<?php if ($_smarty_tpl->tpl_vars['title']->value!='') {?>
+    		<?php echo $_smarty_tpl->tpl_vars['title']->value;?>
+ - 
+    	<?php }?>	
+    	unMarket, the Amazon price tracking website.
+    </TITLE>
+
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    
+    <link rel="stylesheet" type="text/css" href="/includes/css/main.css">
+
 </HEAD>
-<BODY><?php }} ?>
+<BODY>
+<NAV>
+	<h2 class="logo"><span class="background-badge">un</span>Market</h2>
+    <h5>Find it. Track it. Buy it.</h5>
+</NAV><?php }} ?>

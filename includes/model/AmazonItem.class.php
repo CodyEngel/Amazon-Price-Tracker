@@ -1,5 +1,5 @@
 <?php
-require_once("/model/AmazonUtility.class.php");
+require_once("/includes/model/AmazonUtility.class.php");
 
 class AmazonItem
 {
@@ -15,6 +15,7 @@ class AmazonItem
 	private $mLargeImage;
 	
 	private $mTitle;
+	private $mDescription;
 	private $mListAmount;
 	private $mListCurrencyCode;
 	private $mListFormattedPrice;
@@ -44,11 +45,12 @@ class AmazonItem
 	private $mSimilarProductIds = array();
 	// Item Details
 	
-	function __construct($item_id)
+	function __construct($item_id, $item_xml = "")
 	{
 		$this->mItemId = $item_id;
+		$this->mReturnedXml = $item_xml;
 		
-		$this->ParseAmazon($item_id);
+		$this->ParseAmazon();
 	}
 	
 	public function __get($property) {
@@ -56,13 +58,43 @@ class AmazonItem
 			case "IsNotNull":
 				return $this->mReturnedXml != null;
 				break;
+			case "Title":
+				return $this->mTitle;
+				break;
+			case "ListAmount":
+				return $this->mListFormattedPrice;
+				break;
+			case "OfferAmount":
+				return $this->mOfferFormattedPrice;
+				break;
+			case "Price":
+				return $this->mOfferFormattedPrice != null ? $this->mOfferFormattedPrice : "DIGITAL";
+				break;
+			case "Description":
+				return $this->mDescription;
+				break;
+			case "ImageURL":
+				if($this->mLargeImage != "") return $this->mLargeImage;
+				else if($this->mMediumImage != "") return $this->mMediumImage;
+				else if($this->mSmallImage != "") return $this->mSmallImage;
+				else return "http://placehold.it/350";
+				break;
+			case "DetailsURL":
+				return $this->mDetailsPageUrl;
+				break;
+
 		} // switch
 	} // get
 	
 	/* Item Setup */
 	private function ParseAmazon()
 	{
-		$this->mReturnedXml = AmazonUtility::ItemLookup($this->mItemId);
+		do
+		{
+			$this->mReturnedXml = AmazonUtility::ItemLookup($this->mItemId);
+			if($this->mReturnedXml == FALSE) usleep(500000); // sleep for half a second
+		}
+		while($this->mReturnedXml == FALSE);
 		
 		if($this->mReturnedXml !== FALSE)
 		{
@@ -71,11 +103,11 @@ class AmazonItem
 			{
 				if($pxml->Items->Item != null)
 				{
-					$this->mDetailsPageUrl				= $pxml->Items->Item->DetailPageUrl;
+					$this->mDetailsPageUrl				= $pxml->Items->Item->DetailPageURL;
 					$this->mSalesRank					= $pxml->Items->Item->SalesRank;
-					$this->mSmallImage					= $pxml->Items->Item->SmallImage->Url;
-					$this->mMediumImage					= $pxml->Items->Item->MediumImage->Url;
-					$this->mLargeImage					= $pxml->Items->Item->LargeImage->Url;
+					$this->mSmallImage					= $pxml->Items->Item->SmallImage->URL;
+					$this->mMediumImage					= $pxml->Items->Item->MediumImage->URL;
+					$this->mLargeImage					= $pxml->Items->Item->LargeImage->URL;
 					
 					if($pxml->Items->Item->ItemAttributes != null)
 					{
@@ -107,8 +139,12 @@ class AmazonItem
 						
 						$this->mSuperSaverShippingEligible	= $pxml->Items->Item->Offers->Offer->OfferListing->IsEligibleForSuperSaverShipping;
 					}
+					if($pxml->Items->Item->EditorialReviews != null && $pxml->Items->Item->EditorialReviews->EditorialReview != null)
+					{
+						$this->mDescription = strip_tags($pxml->Items->Item->EditorialReviews->EditorialReview->Content);
+					}
 					
-					$this->mCustomerReviewsIFrame		= $pxml->Items->Item->CustomerReviews->IFrameUrl;
+					$this->mCustomerReviewsIFrame = $pxml->Items->Item->CustomerReviews->IFrameUrl;
 					
 					foreach($pxml->Items->Item->SimilarProducts->SimilarProduct AS $SimilarProduct)
 					{
