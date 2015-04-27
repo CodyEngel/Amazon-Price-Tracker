@@ -28,6 +28,7 @@ class AmazonUtility
 			'Keywords' => $keyword,
 			'SearchIndex' => $searchIndex,
 			'ResponseGroup' => "ItemIds",
+			'Condition' => 'New',
 			'ItemPage' => $itemPage
 			));
 			

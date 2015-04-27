@@ -1,10 +1,11 @@
 <?php
-require_once("/includes/model/AmazonUtility.class.php");
+//require_once("/includes/model/AmazonUtility.class.php");
 
 class AmazonItem
 {
 	private $mItemId;
 	private $mReturnedXml;
+	private $mTrackedPrice;
 	
 	// Item Details
 	
@@ -68,7 +69,9 @@ class AmazonItem
 				return $this->mOfferFormattedPrice;
 				break;
 			case "Price":
-				return $this->mOfferFormattedPrice != null ? $this->mOfferFormattedPrice : "DIGITAL";
+				if($this->mTrackedPrice) return "$".number_format($this->mTrackedPrice/100, 2);
+				if($this->mOfferFormattedPrice) return $this->mOfferFormattedPrice;
+				return "N/A";
 				break;
 			case "Description":
 				return $this->mDescription;
@@ -89,12 +92,87 @@ class AmazonItem
 	/* Item Setup */
 	private function ParseAmazon()
 	{
-		do
+		global $DBO;
+		/*
+			check if item exists in database amazon_product table
+
+			amazon_product_asin		char(10) PK
+			amazon_product_title	varchar(1000)
+			amazon_product_xml 		mediumtext
+			product_category_id 	int(10) UN
+
+			create a prepared statement
+			if ($stmt = $mysqli->prepare("SELECT District FROM City WHERE Name=?")) {
+
+			    bind parameters for markers
+			    $stmt->bind_param("s", $city);
+
+			    execute query
+			    $stmt->execute();
+
+			    bind result variables
+			    $stmt->bind_result($district);
+
+			    fetch value
+			    $stmt->fetch();
+
+			    printf("%s is in district %s\n", $city, $district);
+
+			    close statement
+			    $stmt->close();
+			}
+		*/
+
+		if($statement = $DBO->prepare("SELECT amazon_product_xml FROM amazon_product WHERE amazon_product_asin =?"))
 		{
-			$this->mReturnedXml = AmazonUtility::ItemLookup($this->mItemId);
-			if($this->mReturnedXml == FALSE) usleep(500000); // sleep for half a second
+			$statement->bind_param("s", $this->mItemId);
+
+			$statement->execute();
+
+			$statement->bind_result($amazon_product_xml);
+
+			$statement->fetch();
+
+			$this->mReturnedXml = $amazon_product_xml;
+
+			//echo "mReturnedXml: " . $this->mReturnedXml . "<br/>";
+			//echo "Query Result: " . $amazon_product_xml . "<br/>";
+
+			//echo "mReturnedXml Length: " . strlen($this->mReturnedXml) . "<br/>";
+
+			$statement->close();
+
+			if($statement = $DBO->prepare("SELECT amazon_product_price_price FROM amazon_product_price WHERE amazon_product_asin = ? ORDER BY amazon_product_price_timestamp DESC LIMIT 1"))
+			{
+				$statement->bind_param("s", $this->mItemId);
+
+				$statement->execute();
+
+				$statement->bind_result($amazon_product_price);
+
+				$statement->fetch();
+
+				$this->mTrackedPrice = $amazon_product_price;
+
+				$statement->close();
+			}
 		}
-		while($this->mReturnedXml == FALSE);
+		else
+		{
+			$this->mReturnedXml = "";
+			//echo "statement didn't work";
+		}
+
+		if(strlen($this->mReturnedXml) == 0)
+		{
+			//echo "getting from Amazon API<br/>";
+			do
+			{
+				$this->mReturnedXml = AmazonUtility::ItemLookup($this->mItemId);
+				if($this->mReturnedXml == FALSE) usleep(500000); // sleep for half a second
+			}
+			while($this->mReturnedXml == FALSE);
+		}
 		
 		if($this->mReturnedXml !== FALSE)
 		{
@@ -152,6 +230,37 @@ class AmazonItem
 					}
 				}
 			}
+		}
+
+		/*
+			insert item into database amazon_product table
+
+			amazon_product_asin		char(10) PK
+			amazon_product_title	varchar(1000)
+			amazon_product_xml 		mediumtext
+			product_category_id 	int(10) UN
+
+			// prepare and bind
+			$stmt = $conn->prepare("INSERT INTO MyGuests (firstname, lastname, email) VALUES (?, ?, ?)");
+			$stmt->bind_param("sss", $firstname, $lastname, $email);
+
+			// set parameters and execute
+			$firstname = "John";
+			$lastname = "Doe";
+			$email = "john@example.com";
+			$stmt->execute();
+		*/
+		if($statement = $DBO->prepare("INSERT IGNORE INTO amazon_product (amazon_product_asin, amazon_product_title, amazon_product_xml) VALUES (?, ?, ?)"))
+		{
+			$statement->bind_param("sss", $this->mItemId, $this->mTitle, $this->mReturnedXml);
+
+			$statement->execute();
+
+			$statement->close();
+		}
+		else
+		{
+			//echo "insert statement failed";
 		}
 	}
 	/* Item Setup*/

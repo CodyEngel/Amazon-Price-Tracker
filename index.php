@@ -1,7 +1,8 @@
 <?php
-require_once("/includes/model/AmazonUtility.class.php");
-require_once("/includes/model/AmazonItem.class.php");
-require_once("/includes/model/AmazonSearch.class.php");
+//require_once("/includes/model/AmazonUtility.class.php");
+//require_once("/includes/model/AmazonItem.class.php");
+//require_once("/includes/model/AmazonSearch.class.php");
+require_once("/includes/config.php");
 
 $keyword = "";
 if(isset($_GET["keyword"]))
@@ -11,12 +12,14 @@ if(isset($_GET["keyword"]))
 	$amazon_search = new AmazonSearch($keyword);
 	//echo "Total Results: " . $amazon_search->TotalResults . "<br/>";
 }
+/*
 $request = AmazonUtility::AWSSignedRequest('com', array(
 			'Operation' => 'ItemLookup',
 			'ItemId' => "0385347405",
 			'ResponseGroup' => 'Large'
 			));
-echo "<!-- Amazon XML: ".$request."-->";
+echo "Amazon XML: ".$request;
+*/
 /*
 	Test Item IDs
 
