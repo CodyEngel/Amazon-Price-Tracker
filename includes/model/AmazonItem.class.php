@@ -1,89 +1,91 @@
 <?php
-//require_once("/includes/model/AmazonUtility.class.php");
 
 class AmazonItem
 {
-	private $mItemId;
-	private $mReturnedXml;
-	private $mTrackedPrice;
+	public $ItemId;
+	private $ReturnedXml;
+	public $TrackedPrice;
 	
 	// Item Details
 	
-	private $mDetailsPageUrl;
-	private $mSalesRank;
-	private $mSmallImage;
-	private $mMediumImage;
-	private $mLargeImage;
+	public $DetailsPageUrl;
+	public $SalesRank;
+	public $SmallImage;
+	public $MediumImage;
+	public $LargeImage;
 	
-	private $mTitle;
-	private $mDescription;
-	private $mListAmount;
-	private $mListCurrencyCode;
-	private $mListFormattedPrice;
+	public $Title;
+	public $Description;
+	public $ListAmount;
+	public $ListCurrencyCode;
+	public $ListFormattedPrice;
 	
-	private $mProductGroup;
-	private $mProductTypeName;
-	private $mPublisher;
-	private $mStudio;
+	public $ProductGroup;
+	public $ProductTypeName;
+	public $Publisher;
+	public $Studio;
 	
-	private $mOfferAmount;
-	private $mOfferCurrencyCode;
-	private $mOfferFormattedPrice;
+	public $OfferAmount;
+	public $OfferCurrencyCode;
+	public $OfferFormattedPrice;
 	
-	private $mAmountSavedAmount;
-	private $mAmountSavedCurrencyCode;
-	private $mAmountSavedFormattedPrice;
-	private $mAmountSavedPercent;
+	public $AmountSavedAmount;
+	public $AmountSavedCurrencyCode;
+	public $AmountSavedFormattedPrice;
+	public $AmountSavedPercent;
 	
-	private $mAvailabilityType;
-	private $mAvailabilityMinimumHours;
-	private $mAvailabilityMaximumHours;
+	public $AvailabilityType;
+	public $AvailabilityMinimumHours;
+	public $AvailabilityMaximumHours;
 	
-	private $mSuperSaverShippingEligible;
+	public $SuperSaverShippingEligible;
 	
-	private $mCustomerReviewsIFrame;
+	public $CustomerReviewsIFrame;
 	
-	private $mSimilarProductIds = array();
+	public $SimilarProductIds = array();
 	// Item Details
 	
 	function __construct($item_id, $item_xml = "")
 	{
-		$this->mItemId = $item_id;
-		$this->mReturnedXml = $item_xml;
+		$this->ItemId = $item_id;
+		$this->ReturnedXml = $item_xml;
 		
 		$this->ParseAmazon();
 	}
 	
 	public function __get($property) {
 		switch ($property) {
+			case "ASIN":
+				return $this->ItemId;
+				break;
 			case "IsNotNull":
-				return $this->mReturnedXml != null;
+				return $this->ReturnedXml != null;
 				break;
 			case "Title":
-				return $this->mTitle;
+				return $this->Title;
 				break;
 			case "ListAmount":
-				return $this->mListFormattedPrice;
+				return $this->ListFormattedPrice;
 				break;
 			case "OfferAmount":
-				return $this->mOfferFormattedPrice;
+				return $this->OfferFormattedPrice;
 				break;
 			case "Price":
-				if($this->mTrackedPrice) return "$".number_format($this->mTrackedPrice/100, 2);
-				if($this->mOfferFormattedPrice) return $this->mOfferFormattedPrice;
+				if($this->TrackedPrice) return "$".number_format($this->TrackedPrice/100, 2);
+				if($this->OfferFormattedPrice) return $this->OfferFormattedPrice;
 				return "N/A";
 				break;
 			case "Description":
-				return $this->mDescription;
+				return $this->Description;
 				break;
 			case "ImageURL":
-				if($this->mLargeImage != "") return $this->mLargeImage;
-				else if($this->mMediumImage != "") return $this->mMediumImage;
-				else if($this->mSmallImage != "") return $this->mSmallImage;
+				if($this->LargeImage != "") return $this->LargeImage;
+				else if($this->MediumImage != "") return $this->MediumImage;
+				else if($this->SmallImage != "") return $this->SmallImage;
 				else return "http://placehold.it/350";
 				break;
 			case "DetailsURL":
-				return $this->mDetailsPageUrl;
+				return $this->DetailsPageUrl;
 				break;
 
 		} // switch
@@ -125,7 +127,7 @@ class AmazonItem
 
 		if($statement = $DBO->prepare("SELECT amazon_product_xml FROM amazon_product WHERE amazon_product_asin =?"))
 		{
-			$statement->bind_param("s", $this->mItemId);
+			$statement->bind_param("s", $this->ItemId);
 
 			$statement->execute();
 
@@ -133,18 +135,18 @@ class AmazonItem
 
 			$statement->fetch();
 
-			$this->mReturnedXml = $amazon_product_xml;
+			$this->ReturnedXml = $amazon_product_xml;
 
-			//echo "mReturnedXml: " . $this->mReturnedXml . "<br/>";
+			//echo "mReturnedXml: " . $this->ReturnedXml . "<br/>";
 			//echo "Query Result: " . $amazon_product_xml . "<br/>";
 
-			//echo "mReturnedXml Length: " . strlen($this->mReturnedXml) . "<br/>";
+			//echo "mReturnedXml Length: " . strlen($this->ReturnedXml) . "<br/>";
 
 			$statement->close();
 
 			if($statement = $DBO->prepare("SELECT amazon_product_price_price FROM amazon_product_price WHERE amazon_product_asin = ? ORDER BY amazon_product_price_timestamp DESC LIMIT 1"))
 			{
-				$statement->bind_param("s", $this->mItemId);
+				$statement->bind_param("s", $this->ItemId);
 
 				$statement->execute();
 
@@ -152,81 +154,83 @@ class AmazonItem
 
 				$statement->fetch();
 
-				$this->mTrackedPrice = $amazon_product_price;
+				$this->TrackedPrice = $amazon_product_price;
 
 				$statement->close();
 			}
 		}
 		else
 		{
-			$this->mReturnedXml = "";
+			$this->ReturnedXml = "";
 			//echo "statement didn't work";
 		}
 
-		if(strlen($this->mReturnedXml) == 0)
+		if(strlen($this->ReturnedXml) == 0)
 		{
 			//echo "getting from Amazon API<br/>";
 			do
 			{
-				$this->mReturnedXml = AmazonUtility::ItemLookup($this->mItemId);
-				if($this->mReturnedXml == FALSE) usleep(500000); // sleep for half a second
+				$this->ReturnedXml = AmazonUtility::ItemLookup($this->ItemId);
+				if($this->ReturnedXml == FALSE) usleep(500000); // sleep for half a second
 			}
-			while($this->mReturnedXml == FALSE);
+			while($this->ReturnedXml == FALSE);
 		}
 		
-		if($this->mReturnedXml !== FALSE)
+		if($this->ReturnedXml !== FALSE)
 		{
-			$pxml = simplexml_load_string($this->mReturnedXml);
+			$pxml = simplexml_load_string($this->ReturnedXml);
 			if($pxml !== FALSE)
 			{
 				if($pxml->Items->Item != null)
 				{
-					$this->mDetailsPageUrl				= $pxml->Items->Item->DetailPageURL;
-					$this->mSalesRank					= $pxml->Items->Item->SalesRank;
-					$this->mSmallImage					= $pxml->Items->Item->SmallImage->URL;
-					$this->mMediumImage					= $pxml->Items->Item->MediumImage->URL;
-					$this->mLargeImage					= $pxml->Items->Item->LargeImage->URL;
+					$this->DetailsPageUrl				= $pxml->Items->Item->DetailPageURL;
+					$this->SalesRank					= $pxml->Items->Item->SalesRank;
+					$this->SmallImage					= $pxml->Items->Item->SmallImage->URL;
+					$this->MediumImage					= $pxml->Items->Item->MediumImage->URL;
+					$this->LargeImage					= $pxml->Items->Item->LargeImage->URL;
 					
 					if($pxml->Items->Item->ItemAttributes != null)
 					{
-						$this->mTitle						= $pxml->Items->Item->ItemAttributes->Title;
-						$this->mListAmount					= $pxml->Items->Item->ItemAttributes->ListPrice->Amount;
-						$this->mListCurrencyCode			= $pxml->Items->Item->ItemAttributes->ListPrice->CurrencyCode;
-						$this->mListFormattedPrice			= $pxml->Items->Item->ItemAttributes->ListPrice->FormattedPrice;
+						$this->Title						= $pxml->Items->Item->ItemAttributes->Title;
+						$this->ListAmount					= $pxml->Items->Item->ItemAttributes->ListPrice->Amount;
+						$this->ListCurrencyCode			= $pxml->Items->Item->ItemAttributes->ListPrice->CurrencyCode;
+						$this->ListFormattedPrice			= $pxml->Items->Item->ItemAttributes->ListPrice->FormattedPrice;
 						
-						$this->mProductGroup				= $pxml->Items->Item->ItemAttributes->ProductGroup;
-						$this->mProductTypeName				= $pxml->Items->Item->ItemAttributes->ProductTypeName;
-						$this->mPublisher					= $pxml->Items->Item->ItemAttributes->Publisher;
-						$this->mStudio						= $pxml->Items->Item->ItemAttributes->Studio;
+						$this->ProductGroup				= $pxml->Items->Item->ItemAttributes->ProductGroup;
+						$this->ProductTypeName				= $pxml->Items->Item->ItemAttributes->ProductTypeName;
+						$this->Publisher					= $pxml->Items->Item->ItemAttributes->Publisher;
+						$this->Studio						= $pxml->Items->Item->ItemAttributes->Studio;
 					}
 					
 					if($pxml->Items->Item->Offers != null && $pxml->Items->Item->Offers->Offer != null)
 					{
-						$this->mOfferAmount					= $pxml->Items->Item->Offers->Offer->OfferListing->Price->Amount;
-						$this->mOfferCurrencyCode 			= $pxml->Items->Item->Offers->Offer->OfferListing->Price->CurrencyCode;
-						$this->mOfferFormattedPrice			= $pxml->Items->Item->Offers->Offer->OfferListing->Price->FormattedPrice;
+						$this->OfferAmount					= $pxml->Items->Item->Offers->Offer->OfferListing->Price->Amount;
+						$this->OfferCurrencyCode 			= $pxml->Items->Item->Offers->Offer->OfferListing->Price->CurrencyCode;
+						$this->OfferFormattedPrice			= $pxml->Items->Item->Offers->Offer->OfferListing->Price->FormattedPrice;
 						
-						$this->mAmountSavedAmount			= $pxml->Items->Item->Offers->Offer->OfferListing->AmountSaved->Amount;
-						$this->mAmountSavedCurrencyCode 	= $pxml->Items->Item->Offers->Offer->OfferListing->AmountSaved->CurrencyCode;
-						$this->mAmountSavedFormattedPrice	= $pxml->Items->Item->Offers->Offer->OfferListing->AmountSaved->FormattedPrice;
-						$this->mAmountSavedPercent			= $pxml->Items->Item->Offers->Offer->OfferListing->PercentageSaved;
+						$this->AmountSavedAmount			= $pxml->Items->Item->Offers->Offer->OfferListing->AmountSaved->Amount;
+						$this->AmountSavedCurrencyCode 	= $pxml->Items->Item->Offers->Offer->OfferListing->AmountSaved->CurrencyCode;
+						$this->AmountSavedFormattedPrice	= $pxml->Items->Item->Offers->Offer->OfferListing->AmountSaved->FormattedPrice;
+						$this->AmountSavedPercent			= $pxml->Items->Item->Offers->Offer->OfferListing->PercentageSaved;
 						
-						$this->mAvailabilityType			= $pxml->Items->Item->Offers->Offer->OfferListing->AvailabilityAttributes->AvailabilityType;
-						$this->mAvailabilityMinimumHours	= $pxml->Items->Item->Offers->Offer->OfferListing->AvailabilityAttributes->MinimumHours;
-						$this->mAvailabilityMaximumHours	= $pxml->Items->Item->Offers->Offer->OfferListing->AvailabilityAttributes->MaximumHours;
+						$this->AvailabilityType			= $pxml->Items->Item->Offers->Offer->OfferListing->AvailabilityAttributes->AvailabilityType;
+						$this->AvailabilityMinimumHours	= $pxml->Items->Item->Offers->Offer->OfferListing->AvailabilityAttributes->MinimumHours;
+						$this->AvailabilityMaximumHours	= $pxml->Items->Item->Offers->Offer->OfferListing->AvailabilityAttributes->MaximumHours;
 						
-						$this->mSuperSaverShippingEligible	= $pxml->Items->Item->Offers->Offer->OfferListing->IsEligibleForSuperSaverShipping;
+						$this->SuperSaverShippingEligible	= $pxml->Items->Item->Offers->Offer->OfferListing->IsEligibleForSuperSaverShipping;
 					}
 					if($pxml->Items->Item->EditorialReviews != null && $pxml->Items->Item->EditorialReviews->EditorialReview != null)
 					{
-						$this->mDescription = strip_tags($pxml->Items->Item->EditorialReviews->EditorialReview->Content);
+						$this->Description = preg_replace('#<br\s*/?>#i', "\n",
+												strip_tags($pxml->Items->Item->EditorialReviews->EditorialReview->Content, "<br><br/>")
+											);
 					}
 					
-					$this->mCustomerReviewsIFrame = $pxml->Items->Item->CustomerReviews->IFrameUrl;
+					$this->CustomerReviewsIFrame = $pxml->Items->Item->CustomerReviews->IFrameUrl;
 					
 					foreach($pxml->Items->Item->SimilarProducts->SimilarProduct AS $SimilarProduct)
 					{
-						array_push($this->mSimilarProductIds, $SimilarProduct->ASIN);
+						array_push($this->SimilarProductIds, $SimilarProduct->ASIN);
 					}
 				}
 			}
@@ -252,7 +256,7 @@ class AmazonItem
 		*/
 		if($statement = $DBO->prepare("INSERT IGNORE INTO amazon_product (amazon_product_asin, amazon_product_title, amazon_product_xml) VALUES (?, ?, ?)"))
 		{
-			$statement->bind_param("sss", $this->mItemId, $this->mTitle, $this->mReturnedXml);
+			$statement->bind_param("sss", $this->ItemId, $this->Title, $this->ReturnedXml);
 
 			$statement->execute();
 

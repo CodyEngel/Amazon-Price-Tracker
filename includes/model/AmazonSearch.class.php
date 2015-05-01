@@ -1,6 +1,6 @@
 <?php
-require_once("/includes/model/AmazonUtility.class.php");
-require_once("/includes/model/AmazonItem.class.php");
+//require_once("/includes/model/AmazonUtility.class.php");
+//require_once("/includes/model/AmazonItem.class.php");
 
 class AmazonSearch
 {
@@ -10,15 +10,14 @@ class AmazonSearch
 	
 	private $mReturnedXml;
 	
-	private $mSearchResultIds = array();
-	private $mSearchResultItems = array();
+	public $SearchResultIds = array();
+	public $SearchResultItems = array();
 	
 	function __construct($keyword, $searchIndex = "All")
 	{
-		$this->mKeyword 					= $keyword;
-		$this->mSearchIndex 				= $searchIndex;
-		$this->mItemPage 					= 1;
-		$this->mSearchResultItemsRetrieved	= false;
+		$this->mKeyword 	= $keyword;
+		$this->mSearchIndex = $searchIndex;
+		$this->mItemPage 	= 1;
 		
 		$this->ParseSearch();
 	}
@@ -49,8 +48,8 @@ class AmazonSearch
 				foreach($pxml->Items->Item AS $item)
 				{
 					$ASIN = $item->ASIN;
-					array_push($this->mSearchResultIds, $ASIN);
-					array_push($this->mSearchResultItems, new AmazonItem($ASIN));
+					array_push($this->SearchResultIds, $ASIN);
+					array_push($this->SearchResultItems, new AmazonItem($ASIN));
 				}
 			}
 		}

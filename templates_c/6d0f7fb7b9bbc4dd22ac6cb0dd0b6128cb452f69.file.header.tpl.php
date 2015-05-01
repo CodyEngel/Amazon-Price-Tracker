@@ -1,4 +1,4 @@
-<?php /* Smarty version Smarty-3.1.21-dev, created on 2015-04-25 17:38:23
+<?php /* Smarty version Smarty-3.1.21-dev, created on 2015-04-29 20:33:46
          compiled from ".\templates\header.tpl" */ ?>
 <?php /*%%SmartyHeaderCode:26500553c256fe4a0d5-87682656%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
@@ -7,7 +7,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     '6d0f7fb7b9bbc4dd22ac6cb0dd0b6128cb452f69' => 
     array (
       0 => '.\\templates\\header.tpl',
-      1 => 1429996245,
+      1 => 1430361224,
       2 => 'file',
     ),
   ),
@@ -15,13 +15,13 @@ $_valid = $_smarty_tpl->decodeProperties(array (
   'function' => 
   array (
   ),
+  'version' => 'Smarty-3.1.21-dev',
+  'unifunc' => 'content_553c256fe4a0d2_77156452',
   'variables' => 
   array (
     'title' => 0,
   ),
   'has_nocache_code' => false,
-  'version' => 'Smarty-3.1.21-dev',
-  'unifunc' => 'content_553c256fe4a0d2_77156452',
 ),false); /*/%%SmartyHeaderCode%%*/?>
 <?php if ($_valid && !is_callable('content_553c256fe4a0d2_77156452')) {function content_553c256fe4a0d2_77156452($_smarty_tpl) {?><HTML>
 <HEAD>
@@ -42,6 +42,11 @@ $_valid = $_smarty_tpl->decodeProperties(array (
 </HEAD>
 <BODY>
 <NAV>
-	<h2 class="logo"><span class="background-badge">un</span>Market</h2>
-    <h5>Find it. Track it. Buy it.</h5>
+    <div id="header_logo">
+    	<a href="/"><h2 class="logo"><span class="background-badge">un</span>Market</h2></a>
+        <h5>Find it. Track it. Buy it.</h5>
+    </div>
+    <div id="login_or_register">
+        <a href="/login.php">Login</a> or <a href="/login.php">Sign Up</a>
+    </div>
 </NAV><?php }} ?>

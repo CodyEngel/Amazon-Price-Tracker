@@ -1,0 +1,23 @@
+(function() {
+
+    var app = angular.module("unmarket", ["ngRoute"]);
+
+    app.config(function($routeProvider, $locationProvider) {
+
+        var componentsUrl = "app/components/"
+        
+        $routeProvider
+            .when("/", {
+                templateUrl: componentsUrl + "main/MainView.html",
+                controller: "MainController"
+            })
+            .when("/product", {
+                templateUrl: componentsUrl + "product/ProductView.html",
+                controller: "ProductController"
+            })
+            .otherwise({redirectTo: "/"});
+
+        //$locationProvider.html5Mode(true);
+    });
+
+}());

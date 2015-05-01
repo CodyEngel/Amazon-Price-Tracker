@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html ng-app="unmarket">
+<head>
+
+	<title>unMarket</title>
+
+	<!-- Styling -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="app/assets/css/main.css"/>
+
+    <!-- Angular -->
+    <script data-require="angular.js@*" data-semver="1.2.25" src="https://code.angularjs.org/1.2.25/angular.js"></script>
+    <script data-require="angular-route@1.2.25" data-semver="1.2.25" src="https://code.angularjs.org/1.2.25/angular-route.js"></script>
+    <script src="app/app.js"></script>
+    <!-- Controllers -->
+    <script src="app/components/main/MainController.js"></script>
+    <script src="app/components/product/ProductController.js"></script>
+</head>
+<body>
+
+	<nav>
+		<div id="header_logo">
+			<a href="/"><h2 class="logo"><span class="background-badge">un</span>Market</h2></a>
+		    <h5>Find it. Track it. Buy it.</h5>
+		</div>
+		<div id="login_or_register">
+		    <a href="/login.php">Login</a> or <a href="/login.php">Sign Up</a>
+		</div>
+	</nav>
+
+    <div ng-view></div>
+
+</body>
+</html>

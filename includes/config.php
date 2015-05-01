@@ -4,6 +4,9 @@ error_reporting(0);
 
 $root_directory	= "http://192.168.1.30:52990";
 
+$gmail_username = "unmarkettest";  
+$gmail_password = "usUnC9PJZk01";  
+
 $db_user 		= "unmarket";
 $db_password	= "Z6hjQ6mP*%rJAJhd";
 $db_name		= "unmarket";
@@ -20,7 +23,7 @@ spl_autoload_register(function ($class) {
 	{
 		if(!@include("../includes/model/" . $class . ".class.php"))
 		{
-			echo "Cannot include file...";
+			//echo "Cannot include class: " . $class . "<br/>";
 		}
 	}
 });

@@ -3,14 +3,14 @@
 //require_once("/includes/model/AmazonItem.class.php");
 //require_once("/includes/model/AmazonSearch.class.php");
 require_once("/includes/config.php");
+require_once("/libs/Smarty.class.php");
+
 
 $keyword = "";
 if(isset($_GET["keyword"]))
 {
 	$keyword = $_GET["keyword"];
-	$keyword = str_replace("+", " ", $keyword);
 	$amazon_search = new AmazonSearch($keyword);
-	//echo "Total Results: " . $amazon_search->TotalResults . "<br/>";
 }
 /*
 $request = AmazonUtility::AWSSignedRequest('com', array(
@@ -50,8 +50,6 @@ foreach($Search1->SearchResultItems AS $SearchItem)
 	var_dump($SearchItem);
 }
 */
-require_once("/libs/Smarty.class.php");
-
 $smarty = new Smarty;
 
 //$smarty->force_compile = true;

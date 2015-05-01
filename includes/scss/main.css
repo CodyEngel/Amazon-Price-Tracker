@@ -14,9 +14,6 @@ input {
   outline-color: #673AB7;
   outline-width: 2px; }
 
-a {
-  text-decoration: none; }
-
 .logo {
   color: #673AB7;
   font-size: 3em; }
@@ -86,34 +83,11 @@ nav {
 
 #amazon_product_details {
   display: inline-block;
-  margin: 0 5% 0 0;
-  vertical-align: top;
   width: 45%; }
-  #amazon_product_details img {
-    width: 95%; }
-  #amazon_product_details .amazon_product_description {
-    text-align: justify; }
 
 #amazon_product_price_history {
   display: inline-block;
-  vertical-align: top;
   width: 45%; }
-
-#header_logo {
-  display: inline-block;
-  width: 350px; }
-
-#login_or_register {
-  color: #FF4081;
-  display: inline-block;
-  text-align: right;
-  vertical-align: top;
-  width: 600px; }
-  #login_or_register a, #login_or_register a:hover, #login_or_register a:visited {
-    color: #FF4081;
-    font-family: Lato, sans;
-    font-weight: bold;
-    text-decoration: none; }
 
 #page_wrapper {
   margin: 0 auto;

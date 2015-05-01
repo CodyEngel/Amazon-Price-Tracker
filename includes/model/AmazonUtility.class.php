@@ -32,7 +32,17 @@ class AmazonUtility
 			'ItemPage' => $itemPage
 			));
 			
-		return file_get_contents($request);
+		$file_contents = file_get_contents($request);
+		$attempts = 1;
+		while($file_contents === false)
+		{
+			if($attempts >= 5) break;
+			usleep(500000);
+			$file_contents = file_get_contents($request);
+
+			$attempts++;
+		}
+		return $file_contents;
 	}
 	
 	public static function AWSSignedRequest($region, $params, $version='2011-08-01')
