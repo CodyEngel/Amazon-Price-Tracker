@@ -11,7 +11,7 @@
                 templateUrl: componentsUrl + "main/MainView.html",
                 controller: "MainController"
             })
-            .when("/product", {
+            .when("/product/:ASIN", {
                 templateUrl: componentsUrl + "product/ProductView.html",
                 controller: "ProductController"
             })

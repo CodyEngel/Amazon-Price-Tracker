@@ -46,6 +46,58 @@ nav {
   nav h2 {
     margin: 0px; }
 
+.amazon_product_details_item_container {
+  background: #FFFFFF;
+  border-radius: 2px;
+  box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.35);
+  display: inline-block;
+  margin: 1%;
+  overflow: hidden;
+  width: 45%;
+  max-height: 600px;
+  height: 100%;
+  vertical-align: top;
+  position: relative; }
+  .amazon_product_details_item_container .amazon_image {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    z-index: 1; }
+    .amazon_product_details_item_container .amazon_image img {
+      width: 100%; }
+  .amazon_product_details_item_container .amazon_price {
+    background: #FF4081;
+    color: #FFFFFF;
+    font-weight: 300;
+    padding: 8px 8px 8px 4px;
+    position: absolute;
+    right: 0px;
+    top: 0px; }
+  .amazon_product_details_item_container .amazon_title {
+    padding: 8px;
+    position: absolute;
+    z-index: 20;
+    background: #fff;
+    bottom: -20px;
+    width: 100%;
+    max-height: 3.5em; }
+  .amazon_product_details_item_container .price_watch_form {
+    width: 100%; }
+    .amazon_product_details_item_container .price_watch_form a, .amazon_product_details_item_container .price_watch_form a:visited {
+      color: #FF4081;
+      font-weight: bold; }
+      .amazon_product_details_item_container .price_watch_form a:hover, .amazon_product_details_item_container .price_watch_form a:visited:hover {
+        text-decoration: underline; }
+    .amazon_product_details_item_container .price_watch_form p {
+      text-align: center; }
+    .amazon_product_details_item_container .price_watch_form .button {
+      margin: 8px 0.75%;
+      width: 98%; }
+    .amazon_product_details_item_container .price_watch_form .text_field {
+      margin: 0 0.75%;
+      padding: 4px;
+      width: 45%; }
+
 .amazon_search_item_container {
   background: #FFFFFF;
   border-radius: 2px;

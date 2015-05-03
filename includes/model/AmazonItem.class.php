@@ -2,48 +2,56 @@
 
 class AmazonItem
 {
-	public $ItemId;
 	private $ReturnedXml;
-	public $TrackedPrice;
+
+	private $ItemId;
+	private $TrackedPrice;
 	
 	// Item Details
 	
-	public $DetailsPageUrl;
-	public $SalesRank;
-	public $SmallImage;
-	public $MediumImage;
-	public $LargeImage;
+	private $DetailsPageUrl;
+	private $SalesRank;
+	private $SmallImage;
+	private $MediumImage;
+	private $LargeImage;
 	
-	public $Title;
-	public $Description;
-	public $ListAmount;
-	public $ListCurrencyCode;
-	public $ListFormattedPrice;
+	private $Title;
+	private $Description;
+	private $ListAmount;
+	private $ListCurrencyCode;
+	private $ListFormattedPrice;
 	
-	public $ProductGroup;
-	public $ProductTypeName;
-	public $Publisher;
-	public $Studio;
+	private $ProductGroup;
+	private $ProductTypeName;
+	private $Publisher;
+	private $Studio;
 	
-	public $OfferAmount;
-	public $OfferCurrencyCode;
-	public $OfferFormattedPrice;
+	private $OfferAmount;
+	private $OfferCurrencyCode;
+	private $OfferFormattedPrice;
 	
-	public $AmountSavedAmount;
-	public $AmountSavedCurrencyCode;
-	public $AmountSavedFormattedPrice;
-	public $AmountSavedPercent;
+	private $AmountSavedAmount;
+	private $AmountSavedCurrencyCode;
+	private $AmountSavedFormattedPrice;
+	private $AmountSavedPercent;
 	
-	public $AvailabilityType;
-	public $AvailabilityMinimumHours;
-	public $AvailabilityMaximumHours;
+	private $AvailabilityType;
+	private $AvailabilityMinimumHours;
+	private $AvailabilityMaximumHours;
 	
-	public $SuperSaverShippingEligible;
+	private $SuperSaverShippingEligible;
 	
-	public $CustomerReviewsIFrame;
+	private $CustomerReviewsIFrame;	
 	
-	public $SimilarProductIds = array();
+	private $SimilarProductIds = array();
 	// Item Details
+
+	public $ASIN;
+	public $ProductTitle;
+	public $Price;
+	public $FormattedPrice;
+	public $ProductDescription;
+	public $ImageURL;
 	
 	function __construct($item_id, $item_xml = "")
 	{
@@ -51,6 +59,14 @@ class AmazonItem
 		$this->ReturnedXml = $item_xml;
 		
 		$this->ParseAmazon();
+
+		// strval ensures this is encapsulated as "parameters":value
+		$this->ASIN 				= strval($this->ItemId);
+		$this->ProductTitle 		= strval($this->Title);
+		$this->Price 				= strval($this->SetCurrentPrice());
+		$this->FormattedPrice 		= strval($this->SetCurrentPriceFormatted());
+		$this->ProductDescription 	= strval($this->Description);
+		$this->ImageURL 			= strval($this->SetImageURL());
 	}
 	
 	public function __get($property) {
@@ -90,6 +106,28 @@ class AmazonItem
 
 		} // switch
 	} // get
+
+	private function SetCurrentPrice()
+	{
+		if($this->TrackedPrice) return $this->TrackedPrice;
+		if($this->OfferAmount) return $this->OfferAmount;
+		return -1;
+	}
+
+	private function SetCurrentPriceFormatted()
+	{
+		if($this->TrackedPrice) return "$".number_format($this->TrackedPrice/100, 2);
+		if($this->OfferFormattedPrice) return $this->OfferFormattedPrice;
+		return "N/A";
+	}
+
+	private function SetImageURL()
+	{
+		if($this->LargeImage != "") return $this->LargeImage;
+		else if($this->MediumImage != "") return $this->MediumImage;
+		else if($this->SmallImage != "") return $this->SmallImage;
+		else return "http://placehold.it/350";
+	}
 	
 	/* Item Setup */
 	private function ParseAmazon()
@@ -193,10 +231,10 @@ class AmazonItem
 					{
 						$this->Title						= $pxml->Items->Item->ItemAttributes->Title;
 						$this->ListAmount					= $pxml->Items->Item->ItemAttributes->ListPrice->Amount;
-						$this->ListCurrencyCode			= $pxml->Items->Item->ItemAttributes->ListPrice->CurrencyCode;
+						$this->ListCurrencyCode				= $pxml->Items->Item->ItemAttributes->ListPrice->CurrencyCode;
 						$this->ListFormattedPrice			= $pxml->Items->Item->ItemAttributes->ListPrice->FormattedPrice;
 						
-						$this->ProductGroup				= $pxml->Items->Item->ItemAttributes->ProductGroup;
+						$this->ProductGroup					= $pxml->Items->Item->ItemAttributes->ProductGroup;
 						$this->ProductTypeName				= $pxml->Items->Item->ItemAttributes->ProductTypeName;
 						$this->Publisher					= $pxml->Items->Item->ItemAttributes->Publisher;
 						$this->Studio						= $pxml->Items->Item->ItemAttributes->Studio;
@@ -209,7 +247,7 @@ class AmazonItem
 						$this->OfferFormattedPrice			= $pxml->Items->Item->Offers->Offer->OfferListing->Price->FormattedPrice;
 						
 						$this->AmountSavedAmount			= $pxml->Items->Item->Offers->Offer->OfferListing->AmountSaved->Amount;
-						$this->AmountSavedCurrencyCode 	= $pxml->Items->Item->Offers->Offer->OfferListing->AmountSaved->CurrencyCode;
+						$this->AmountSavedCurrencyCode 		= $pxml->Items->Item->Offers->Offer->OfferListing->AmountSaved->CurrencyCode;
 						$this->AmountSavedFormattedPrice	= $pxml->Items->Item->Offers->Offer->OfferListing->AmountSaved->FormattedPrice;
 						$this->AmountSavedPercent			= $pxml->Items->Item->Offers->Offer->OfferListing->PercentageSaved;
 						
@@ -228,9 +266,12 @@ class AmazonItem
 					
 					$this->CustomerReviewsIFrame = $pxml->Items->Item->CustomerReviews->IFrameUrl;
 					
-					foreach($pxml->Items->Item->SimilarProducts->SimilarProduct AS $SimilarProduct)
+					if($pxml->Items->Item->SimilarProducts)
 					{
-						array_push($this->SimilarProductIds, $SimilarProduct->ASIN);
+						foreach($pxml->Items->Item->SimilarProducts->SimilarProduct AS $SimilarProduct)
+						{
+							array_push($this->SimilarProductIds, $SimilarProduct->ASIN);
+						}
 					}
 				}
 			}

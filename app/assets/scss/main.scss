@@ -86,6 +86,90 @@ nav
 	}
 }
 
+.amazon_product_details_item_container
+{
+	background: #FFFFFF;
+	border-radius: 2px;
+	box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.35);
+	display: inline-block;
+	margin: 1%;
+	overflow: hidden;
+	width: 45%;
+	max-height: 600px;
+	height: 100%;
+	vertical-align: top;
+	position: relative;
+
+	.amazon_image
+	{
+		position: relative;
+		width: 100%;
+		overflow: hidden;
+		z-index: 1;
+
+		img
+		{
+			width: 100%;
+		}
+	}
+
+	.amazon_price
+	{
+		background: $secondary-color;
+		color: $white;
+		font-weight: 300;
+		padding: 8px 8px 8px 4px;
+		position: absolute;
+		right: 0px;
+		top: 0px;
+	}
+
+	.amazon_title
+	{
+		  padding: 8px;
+		  position: absolute;
+		  z-index: 20;
+		  background: #fff;
+		  bottom: -20px;
+		  width: 100%;
+		  max-height: 3.5em;
+	}
+
+	.price_watch_form
+	{
+		width: 100%;
+
+		a, a:visited
+		{
+			color: $secondary-color;
+			font-weight: bold;
+
+			&:hover
+			{
+				text-decoration: underline;
+			}
+		}
+
+		p
+		{
+			text-align: center;
+		}
+
+		.button
+		{
+			margin: 8px 0.75%;
+			width: 98%;
+		}
+
+		.text_field
+		{
+			margin: 0 0.75%;
+			padding: 4px;
+			width: 45%;
+		}
+	}
+}
+
 .amazon_search_item_container
 {
 	background: #FFFFFF;

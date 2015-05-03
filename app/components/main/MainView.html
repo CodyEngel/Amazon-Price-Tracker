@@ -1,8 +1,19 @@
 <div id="page_wrapper">
   <div id="content_wrapper">
-    <form id="form_search">
-      <input id="input_search" name="keyword" placeholder="Search by product or ASIN" />
+    <form id="form_search" ng-submit="search(keyword)">
+      <input id="input_search" placeholder="Search by product or ASIN" ng-model="keyword" />
       <input id="button_search" class="button" type="submit" value="Search" />
-    </form>        
+    </form>
+
+    <div class="amazon_search_item_container" ng-repeat="searchResult in searchResults.data">
+    	<a ng-href="#/product/{{searchResult.ASIN}}">
+			<div class="amazon_image">
+				<img ng-src="{{searchResult.ImageURL}}" />
+				<h4 class="amazon_price">{{searchResult.FormattedPrice}}</h4>
+			</div>
+			<h2 class="amazon_title">{{searchResult.ProductTitle}}</h2>
+		</a>
+	</div>
+
   </div>
 </div>
