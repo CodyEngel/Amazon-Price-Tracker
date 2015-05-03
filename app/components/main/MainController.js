@@ -4,8 +4,11 @@
 
 	var MainController = function($scope, $http) {
 
-		var getSearchResults = function(keyword) {
-			return $http.get("http://192.168.1.30:52990/api/get.php?type=search&keyword=" + keyword)
+		$scope.searchText = "Search";
+		$scope.searchIndex = "All";
+
+		var getSearchResults = function(keyword, searchIndex) {
+			return $http.get("http://192.168.1.30:52990/api/get.php?type=search&keyword=" + keyword + "&searchIndex=" + searchIndex)
 					.then(function(response) {
 						return response.data;
 					});
@@ -13,6 +16,7 @@
 
 		var onSearchResults = function(data) {
 			$scope.searchResults = data;
+			$scope.searchText = "Search";
 			console.dir($scope.searchResults);
 		};
 
@@ -20,8 +24,9 @@
 			$scope.error = reason;
 		};
 
-		$scope.search = function(keyword) {
-			getSearchResults(keyword).then(onSearchResults, onError);
+		$scope.search = function(keyword, searchIndex) {
+			$scope.searchText = "Searching...";
+			getSearchResults(keyword, searchIndex).then(onSearchResults, onError);
 		};
 
 	};

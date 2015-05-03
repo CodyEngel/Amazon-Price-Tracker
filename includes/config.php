@@ -1,5 +1,5 @@
 <?php
-error_reporting(0);
+error_reporting(-1);
 //error_reporting(E_ERROR | E_PARSE | E_WARNING | E_NOTICE); // E_WARNING E_NOTICE ignored
 
 $root_directory	= "http://192.168.1.30:52990";

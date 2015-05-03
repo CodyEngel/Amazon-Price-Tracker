@@ -13,11 +13,11 @@ class AmazonSearch
 	public $SearchResultIds = array();
 	public $SearchResultItems = array();
 	
-	function __construct($keyword, $searchIndex = "All")
+	function __construct($keyword, $searchIndex = "All", $itemPage = 1)
 	{
 		$this->mKeyword 	= $keyword;
 		$this->mSearchIndex = $searchIndex;
-		$this->mItemPage 	= 1;
+		$this->mItemPage 	= $itemPage;
 		
 		$this->ParseSearch();
 	}

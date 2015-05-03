@@ -4,12 +4,12 @@ require_once("../includes/config.php");
 switch($_GET["type"])
 {
 	case "search":
-		echo SearchByKeyword($_GET["keyword"]);
+		echo SearchByKeyword($_GET["keyword"], $_GET["searchIndex"]);
 		break;
 	case "product":
 		echo GetProductWithid($_GET["id"]);
 		break;
-	case "product_price_history":
+	case "productPriceHistory":
 		echo GetProductPriceHistoryWithId($_GET["id"]);
 		break;
 	default:
@@ -17,9 +17,9 @@ switch($_GET["type"])
 }
 
 /** Functions **/
-function SearchByKeyword($keyword)
+function SearchByKeyword($keyword, $searchIndex)
 {
-	$amazonSearch = new AmazonSearch($keyword);
+	$amazonSearch = new AmazonSearch($keyword, $searchIndex);
 	return json_encode(array("data" => $amazonSearch->SearchResultItems));
 }
 

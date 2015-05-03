@@ -274,6 +274,32 @@ nav
 	}
 }
 
+.input_search_area
+{
+	border: 1px solid #eee;
+	display: inline-block;
+	width: 70%;
+
+	input
+	{
+		border: none;
+		outline: none;
+		padding: 8px;
+		width: 75%;
+	}
+	select
+	{
+		appearance: none;
+		 -webkit-appearance: none;
+		 border: none;
+		 border-right: 1px solid #eee;
+		 background: none;
+		 font-size: 15px;
+		 padding: 8px;
+		 width: 20%;
+	}
+}
+
 #page_wrapper
 {
 	margin: 0 auto;
@@ -286,12 +312,6 @@ nav
 		#form_search
 		{
 			width: 100%;
-
-			#input_search
-			{
-				padding: 8px;
-				width: 70%;
-			}
 
 			#button_search
 			{

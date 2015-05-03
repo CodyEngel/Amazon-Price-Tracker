@@ -13,6 +13,11 @@
 					});
 		};
 
+		$scope.addPriceWatchItem = function(desiredPrice, email)
+		{
+			$http.get("http://192.168.1.30:52990/api/put.php?type=priceWatch&desiredPrice=" + desiredPrice + "&email=" + email + "&asin=" + ASIN);
+		};
+
 		var onResult = function(response) {
 			console.log(ASIN);
 			console.dir(response);
@@ -25,37 +30,6 @@
 
 		getProduct().then(onResult, onError);
 
-		/*
-			var onSearchResults = function(data) {
-				$scope.searchResults = data;
-				console.dir($scope.searchResults);
-			};
-
-			var onError = function(reason) {
-				$scope.error = reason;
-			};
-
-			$scope.search = function(keyword) {
-				getSearchResults(keyword).then(onSearchResults, onError);
-			};
-		*/
-
-
-		/*
-			var onRepo = function(data) {
-	            $scope.repo = data;
-	        };
-
-	        var onError = function(reason) {
-	            $scope.error = reason;
-	        };
-
-	        var reponame = $routeParams.reponame;
-	        var username = $routeParams.username;
-
-	        github.getRepoDetails(username, reponame)
-	            .then(onRepo, onError);
-		*/
 	};
   
 	app.controller("ProductController", ["$scope", "$routeParams", "$http", ProductController]); // array allows for minification
