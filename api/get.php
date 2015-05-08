@@ -19,6 +19,17 @@ switch($_GET["type"])
 /** Functions **/
 function SearchByKeyword($keyword, $searchIndex)
 {
+	global $DBO;
+
+	if($statement = $DBO ->prepare("INSERT INTO amazon_search_log (amazon_search_log_keyword, amazon_search_log_search_index) VALUES (?, ?)"))
+	{
+		$statement->bind_param("ss", $keyword, $searchIndex);
+
+		$statement->execute();
+
+		$statement->close();
+	}
+
 	$amazonSearch = new AmazonSearch($keyword, $searchIndex);
 	return json_encode(array("data" => $amazonSearch->SearchResultItems));
 }

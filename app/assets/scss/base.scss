@@ -1,0 +1,71 @@
+/* Main Style */
+h1, h2, h3, h4, h5, h6
+{
+    font-family: $header-font;
+}
+
+body, p, input
+{
+    color: $black;
+    font-family: $content-font;
+    font-size: 16px;
+}
+
+input
+{
+    outline-color: $primary-color;
+    outline-width: 2px;
+}
+
+a
+{
+    text-decoration: none;
+}
+
+.no_padding
+{
+    padding: 0!important;
+}
+
+/* Buttons */
+.button
+{
+    background-color: rgba(0, 0, 0, 0);
+    border: 2px solid $primary-color;
+    border-radius: 3px;
+    color: $primary-color;
+    font-family: $content-font;
+    font-weight: bold;
+    padding: 8px 40px;
+    transition: background-color 0.7s ease;
+
+    &:hover
+    {
+        background-color: $primary-color;
+        color: $white;
+        cursor: pointer;
+    }
+}
+
+
+/* Containers */
+#page_wrapper
+{
+	margin: 0 auto;
+	width: $max-width;
+
+	#content_wrapper
+	{
+		width: 100%;
+
+		#form_search
+		{
+			width: 100%;
+
+			#button_search
+			{
+				width: 25%;
+			}
+		}
+	}
+}

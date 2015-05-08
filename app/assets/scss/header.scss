@@ -1,0 +1,30 @@
+nav
+{
+	margin: 24px auto 48px auto;
+	width: $max-width;
+
+	h2
+	{
+		margin: 0px;
+	}
+}
+
+.logo
+{
+	color: $primary-color;
+	font-size: 3em;
+
+	.background-badge
+	{
+		background-color: $primary-color;
+		color: $white;
+		margin: 8px;
+		padding: 16px;
+	}
+}
+
+#header_logo
+{
+	display: inline-block;
+	width: 100%;
+}

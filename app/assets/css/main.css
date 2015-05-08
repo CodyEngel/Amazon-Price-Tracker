@@ -1,4 +1,3 @@
-/* Goolge Fonts */
 @import url(http://fonts.googleapis.com/css?family=Lato:400,700|Merriweather:400,700);
 /* Variables */
 /* Main Style */
@@ -17,15 +16,10 @@ input {
 a {
   text-decoration: none; }
 
-.logo {
-  color: #673AB7;
-  font-size: 3em; }
-  .logo .background-badge {
-    background-color: #673AB7;
-    color: #FFFFFF;
-    margin: 8px;
-    padding: 16px; }
+.no_padding {
+  padding: 0 !important; }
 
+/* Buttons */
 .button {
   background-color: transparent;
   border: 2px solid #673AB7;
@@ -40,11 +34,92 @@ a {
     color: #FFFFFF;
     cursor: pointer; }
 
+/* Containers */
+#page_wrapper {
+  margin: 0 auto;
+  width: 1000px; }
+  #page_wrapper #content_wrapper {
+    width: 100%; }
+    #page_wrapper #content_wrapper #form_search {
+      width: 100%; }
+      #page_wrapper #content_wrapper #form_search #button_search {
+        width: 25%; }
+
 nav {
   margin: 24px auto 48px auto;
   width: 1000px; }
   nav h2 {
     margin: 0px; }
+
+.logo {
+  color: #673AB7;
+  font-size: 3em; }
+  .logo .background-badge {
+    background-color: #673AB7;
+    color: #FFFFFF;
+    margin: 8px;
+    padding: 16px; }
+
+#header_logo {
+  display: inline-block;
+  width: 100%; }
+
+.input_search_area {
+  border: 1px solid #eee;
+  display: inline-block;
+  width: 70%; }
+  .input_search_area input {
+    border: none;
+    outline: none;
+    padding: 8px;
+    width: 75%; }
+  .input_search_area select {
+    appearance: none;
+    -webkit-appearance: none;
+    border: none;
+    border-right: 1px solid #eee;
+    background: none;
+    font-size: 15px;
+    padding: 8px;
+    width: 20%; }
+
+.amazon_search_item_container {
+  background: #FFFFFF;
+  border-radius: 2px;
+  box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.35);
+  display: inline-block;
+  margin: 1%;
+  overflow: hidden;
+  width: 30%;
+  height: 400px;
+  position: relative; }
+  .amazon_search_item_container a {
+    color: #222222; }
+    .amazon_search_item_container a:visited {
+      color: #222222; }
+  .amazon_search_item_container .amazon_image {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    z-index: 1; }
+    .amazon_search_item_container .amazon_image img {
+      width: 100%; }
+  .amazon_search_item_container .amazon_price {
+    background: #FF4081;
+    color: #FFFFFF;
+    font-weight: 300;
+    padding: 8px 8px 8px 4px;
+    position: absolute;
+    right: 0px;
+    top: 0px; }
+  .amazon_search_item_container .amazon_title {
+    padding: 8px;
+    position: absolute;
+    z-index: 20;
+    background: #fff;
+    bottom: -20px;
+    width: 100%;
+    max-height: 3.5em; }
 
 .amazon_product_details_item_container {
   background: #FFFFFF;
@@ -57,7 +132,8 @@ nav {
   max-height: 600px;
   height: 100%;
   vertical-align: top;
-  position: relative; }
+  position: relative;
+  padding: 0 8px; }
   .amazon_product_details_item_container .amazon_image {
     position: relative;
     width: 100%;
@@ -98,110 +174,48 @@ nav {
       padding: 4px;
       width: 45%; }
 
-.amazon_search_item_container {
-  background: #FFFFFF;
-  border-radius: 2px;
-  box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.35);
-  display: inline-block;
-  margin: 1%;
-  overflow: hidden;
-  width: 30%;
-  height: 400px;
-  position: relative; }
-  .amazon_search_item_container a {
-    color: #222222; }
-    .amazon_search_item_container a:visited {
-      color: #222222; }
-  .amazon_search_item_container .amazon_image {
-    position: relative;
-    width: 100%;
-    overflow: hidden;
-    z-index: 1; }
-    .amazon_search_item_container .amazon_image img {
-      width: 100%; }
-  .amazon_search_item_container .amazon_price {
-    background: #FF4081;
-    color: #FFFFFF;
-    font-weight: 300;
-    padding: 8px 8px 8px 4px;
-    position: absolute;
-    right: 0px;
-    top: 0px; }
-  .amazon_search_item_container .amazon_title {
-    padding: 8px;
-    position: absolute;
-    z-index: 20;
-    background: #fff;
-    bottom: -20px;
-    width: 100%;
-    max-height: 3.5em; }
-
-#amazon_product_details {
-  display: inline-block;
-  margin: 0 5% 0 0;
-  vertical-align: top;
-  width: 45%; }
-  #amazon_product_details img {
-    width: 95%; }
-  #amazon_product_details .amazon_product_description {
-    text-align: justify; }
-
-#amazon_product_price_history {
-  display: inline-block;
-  vertical-align: top;
-  width: 45%; }
-
-#header_logo {
-  display: inline-block;
-  width: 350px; }
-
-#login_or_register {
-  color: #FF4081;
-  display: inline-block;
-  text-align: right;
-  vertical-align: top;
-  width: 600px; }
-  #login_or_register a, #login_or_register a:hover, #login_or_register a:visited {
-    color: #FF4081;
-    font-family: Lato, sans;
-    font-weight: bold;
-    text-decoration: none; }
-
-.input_search_area {
-  border: 1px solid #eee;
-  display: inline-block;
-  width: 70%; }
-  .input_search_area input {
-    border: none;
-    outline: none;
-    padding: 8px;
-    width: 75%; }
-  .input_search_area select {
-    appearance: none;
-    -webkit-appearance: none;
-    border: none;
-    border-right: 1px solid #eee;
-    background: none;
-    font-size: 15px;
-    padding: 8px;
-    width: 20%; }
-
-#page_wrapper {
-  margin: 0 auto;
-  width: 1000px; }
-  #page_wrapper #content_wrapper {
-    width: 100%; }
-    #page_wrapper #content_wrapper #form_search {
-      width: 100%; }
-      #page_wrapper #content_wrapper #form_search #button_search {
-        width: 25%; }
-
 /* Media Queries */
-@media only screen and (min-width: 768px) {
-  /* tablets and desktop */ }
+@media only screen and (max-width: 1000px) {
+  /* tablets and desktop */
+  nav {
+    width: 100%; }
+
+  #page_wrapper {
+    width: 100%; } }
 @media only screen and (max-width: 767px) {
-  /* phones */ }
-@media only screen and (max-width: 767px) and (orientation: portrait) {
-  /* portrait phones */ }
+  /* portrait phones */
+  nav {
+    width: 100%; }
+
+  .amazon_search_item_container {
+    width: 95%; }
+
+  .input_search_area {
+    border: 1px solid #eee;
+    display: inline-block;
+    width: 70%; }
+    .input_search_area input {
+      padding: 8px;
+      width: 72%; }
+
+  .amazon_product_details_item_container, .amazon_search_item_container {
+    display: block;
+    margin: 8px auto;
+    width: 95%; }
+
+  #form_search {
+    margin: 0 auto;
+    width: 95% !important; }
+
+  #button_search {
+    width: 28%; }
+
+  .button {
+    padding: 8px 0px; }
+
+  #page_wrapper {
+    width: 100%; }
+    #page_wrapper #content_wrapper {
+      width: 100%; } }
 
 /*# sourceMappingURL=main.css.map */

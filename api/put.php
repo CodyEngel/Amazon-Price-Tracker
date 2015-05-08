@@ -4,13 +4,13 @@ require_once("../includes/config.php");
 switch($_GET["type"])
 {
 	case "priceWatch":
-		InsertPriceWatch($_GET["desiredPrice"], $_GET["email"], $_GET["asin"]);
+		InsertPriceWatch($_GET["desiredPrice"], $_GET["currentPrice"], $_GET["email"], $_GET["asin"]);
 		break;
 	default:
 		echo "denied";
 }
 
-function InsertPriceWatch($desiredPrice, $email, $asin)
+function InsertPriceWatch($desiredPrice, $currentPrice, $email, $asin)
 {
 	global $DBO;
 
@@ -38,6 +38,11 @@ function InsertPriceWatch($desiredPrice, $email, $asin)
 	$personId = -1;
 	$firstName = "";
 	$lastName = "";
+	$desiredPrice = preg_replace("/[^0-9]/", "", $desiredPrice);
+	$currentPrice = preg_replace("/[^0-9]/", "", $currentPrice);
+
+	echo "currentPrice: " . $currentPrice . "<br>";
+	echo "desiredPrice: " . $desiredPrice . "<br>";
 
 	if($statement = $DBO->prepare("SELECT person_id FROM email WHERE email_address = ?"))
 	{
@@ -92,11 +97,16 @@ function InsertPriceWatch($desiredPrice, $email, $asin)
 	}
 
 	// insert new wish list item for tracking
-	if($statement = $DBO->prepare("INSERT INTO person_wish_list_item (person_wish_list_item_desired_price, person_wish_list_item_is_tracking, amazon_product_asin, person_id) VALUES(?, b'1', ?, ?)"))
+	// TODO: overwrite existing record if one already exists for the user
+	if($statement = $DBO->prepare("INSERT INTO person_wish_list_item (person_wish_list_item_desired_price, person_wish_list_item_current_price, person_wish_list_item_is_tracking, amazon_product_asin, person_id)
+									VALUES(?, ?, b'1', ?, ?) ON DUPLICATE KEY
+									UPDATE person_wish_list_item_desired_price = ?, person_wish_list_item_is_tracking = b'1', person_wish_list_item_current_price = ?"))
 	{
-		$statement->bind_param("sss", $desiredPrice, $asin, $personId);
+		$statement->bind_param("ssssss", $desiredPrice, $currentPrice, $asin, $personId, $desiredPrice, $currentPrice);
 
 		$statement->execute();
+
+		echo "error: " . $statement->error . "<br>";
 
 		$statement->close();
 

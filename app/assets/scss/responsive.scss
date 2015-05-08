@@ -1,0 +1,78 @@
+/* Media Queries */
+@media only screen and (max-width: $max-width)
+{
+    /* tablets and desktop */
+    nav
+	{
+		width: 100%;
+	}
+
+	#page_wrapper
+    {
+    	width: 100%;
+    	#content_wrapper
+    	{
+    	}
+    }
+}
+
+@media only screen and (max-width: 767px)
+{
+    /* portrait phones */
+    nav
+	{
+		width: 100%;
+	}
+
+    .amazon_search_item_container
+	{
+		width: 95%;
+	}
+
+	.input_search_area
+	{
+		border: 1px solid #eee;
+		display: inline-block;
+		width: 70%;
+
+		input
+		{
+			padding: 8px;
+			width: 72%;
+		}
+		select
+		{
+		}
+	}
+
+	.amazon_product_details_item_container, .amazon_search_item_container
+	{
+		display: block;
+		margin: 8px auto;
+		width: 95%;
+	}
+	#form_search
+	{
+		margin: 0 auto;
+		width: 95%!important;
+	}
+
+	#button_search
+	{
+		width: 28%;
+	}
+
+	.button
+	{
+		padding: 8px 0px;
+	}
+
+	#page_wrapper
+    {
+    	width: 100%;
+    	#content_wrapper
+    	{
+    		width: 100%;
+    	}
+    }
+}
