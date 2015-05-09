@@ -8,7 +8,7 @@
 		$scope.searchIndex = "All";
 
 		var getSearchResults = function(keyword, searchIndex) {
-			return $http.get("http://192.168.1.30:52990/api/get.php?type=search&keyword=" + keyword + "&searchIndex=" + searchIndex)
+			return $http.get("/api/get.php?type=search&keyword=" + keyword + "&searchIndex=" + searchIndex)
 					.then(function(response) {
 						return response.data;
 					});

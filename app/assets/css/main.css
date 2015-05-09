@@ -64,6 +64,14 @@ nav {
   display: inline-block;
   width: 100%; }
 
+.axis path, .axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges; }
+
+.area {
+  fill: #673AB7; }
+
 .input_search_area {
   border: 1px solid #eee;
   display: inline-block;

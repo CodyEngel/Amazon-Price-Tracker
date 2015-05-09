@@ -10,6 +10,7 @@ switch($_GET["type"])
 		echo GetProductWithid($_GET["id"]);
 		break;
 	case "productPriceHistory":
+		header('Content-Type: text/plain');
 		echo GetProductPriceHistoryWithId($_GET["id"]);
 		break;
 	default:
@@ -61,6 +62,12 @@ function GetProductPriceHistoryWithId($id)
 
 		$statement->close();
 	}
-
-	return json_encode(array("data" => $amazon_product_price_history));
+	
+	$returnString = "date\tclose\n";
+	foreach($amazon_product_price_history AS $price)
+	{
+		$returnString .= $price->Timestamp . "\t" . $price->Price . "\n";
+	}
+	return $returnString;
+	//return json_encode(array("data" => $amazon_product_price_history));
 }
