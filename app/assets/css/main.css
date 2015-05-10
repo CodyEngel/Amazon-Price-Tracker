@@ -23,12 +23,13 @@ a {
 .button {
   background-color: transparent;
   border: 2px solid #673AB7;
-  border-radius: 3px;
+  border-radius: 4px;
   color: #673AB7;
   font-family: Merriweather, sans-serif;
   font-weight: bold;
   padding: 8px 40px;
-  transition: background-color 0.7s ease; }
+  transition: background-color 0.7s ease;
+  -webkit-appearance: none; }
   .button:hover {
     background-color: #673AB7;
     color: #FFFFFF;
@@ -71,6 +72,11 @@ nav {
 
 .area {
   fill: #673AB7; }
+
+.line {
+  fill: none;
+  stroke: #673AB7;
+  stroke-width: 2.5px; }
 
 .input_search_area {
   border: 1px solid #eee;
@@ -167,13 +173,6 @@ nav {
     max-height: 3.5em; }
   .amazon_product_details_item_container .price_watch_form {
     width: 100%; }
-    .amazon_product_details_item_container .price_watch_form a, .amazon_product_details_item_container .price_watch_form a:visited {
-      color: #FF4081;
-      font-weight: bold; }
-      .amazon_product_details_item_container .price_watch_form a:hover, .amazon_product_details_item_container .price_watch_form a:visited:hover {
-        text-decoration: underline; }
-    .amazon_product_details_item_container .price_watch_form p {
-      text-align: center; }
     .amazon_product_details_item_container .price_watch_form .button {
       margin: 8px 0.75%;
       width: 98%; }
@@ -181,6 +180,18 @@ nav {
       margin: 0 0.75%;
       padding: 4px;
       width: 45%; }
+  .amazon_product_details_item_container .price_watch_confirmation {
+    background: #673AB7;
+    border-radius: 4px;
+    color: #ffffff;
+    padding: 8px; }
+  .amazon_product_details_item_container .view_on_amazon {
+    text-align: center; }
+    .amazon_product_details_item_container .view_on_amazon a, .amazon_product_details_item_container .view_on_amazon a:visited {
+      color: #FF4081;
+      font-weight: bold; }
+      .amazon_product_details_item_container .view_on_amazon a:hover, .amazon_product_details_item_container .view_on_amazon a:visited:hover {
+        text-decoration: underline; }
 
 /* Media Queries */
 @media only screen and (max-width: 1000px) {

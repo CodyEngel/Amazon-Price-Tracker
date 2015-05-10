@@ -10,13 +10,14 @@
             </a>
         </div>
         <div class="amazon_product_details_item_container">
-            <form class="price_watch_form" ng-submit="addPriceWatchItem(desiredPrice, email)">
-                <h3>Price Watch</h3>
+            <h3>Price Watch</h3>
+            <form class="price_watch_form" ng-submit="addPriceWatchItem(desiredPrice, email)" ng-hide="priceWatchSubmitted">
                 <input type="text" placeholder="Desired Price" class="text_field" ng-model="desiredPrice" ng-blur="formatNumber(desiredPrice)" />
                 <input type="email" placeholder="Email" class="text_field" ng-model="email" /><br/>
                 <input type="submit" value="Get Email Notifications" class="button" /><br/>
-                <p><a ng-href="http://amazon.com/dp/{{product.ASIN}}/?tag=unmarket-20">View on Amazon</a></p>
             </form>
+            <p class="price_watch_confirmation" ng-show="priceWatchSubmitted">We've received your price watch request and have forwarded it along to Bob, our Amazon price guru. Bob will keep refreshing {{product.ProductTitle}}'s product listing until it drops down to (or below) ${{desiredPrice}}. So sit back, grab some Chipotle and we'll email you when it's time to buy.</p>
+            <p class="view_on_amazon"><a ng-href="http://amazon.com/dp/{{product.ASIN}}/?tag=unmarket-20">View on Amazon</a></p>
             <h3>Product Description</h3>
             <p>{{product.ProductDescription}}</p>
         </div>

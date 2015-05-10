@@ -5,6 +5,7 @@
 	var ProductController = function($scope, $routeParams, $http, $filter) {
 
 		var ASIN = $routeParams.ASIN;
+		$scope.priceWatchSubmitted = false;
 
 		var getProduct = function() {
 			return $http.get("/api/get.php?type=product&id=" + ASIN)
@@ -23,6 +24,7 @@
 		$scope.addPriceWatchItem = function(desiredPrice, email)
 		{
 			$http.get("/api/put.php?type=priceWatch&desiredPrice=" + desiredPrice + "&email=" + email + "&asin=" + ASIN + "&currentPrice=" + $scope.product.Price);
+			$scope.priceWatchSubmitted = true;
 		};
 
 		$scope.formatNumber = function(desiredPrice)
@@ -55,7 +57,7 @@
 	{
 		return {
 			restrict: 'EA',
-			template: "<svg width='100%' height='500'></svg>",
+			template: "<svg width='90%' height='500'></svg>",
 			link: function(scope, elem, attrs) {
 				var ASIN = $routeParams.ASIN;
 				     
@@ -81,12 +83,12 @@
 				    .scale(y)
 				    .orient("left");
 
-				var area = d3.svg.area()
-				    .x(function(d) { return x(d.date); })
-				    .y0(height)
-				    .y1(function(d) { return y(d.close); });
+				var line = d3.svg.line()
+					.x(function(d) { return x(d.date); })
+					.y(function(d) { return y(d.close); });
 
 				var svg = d3.select(rawSvg)
+				    .attr("width", rawSvg.clientWidth + margin.left + margin.right)
 				    .attr("height", height + margin.top + margin.bottom)
 				  .append("g")
 				    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
@@ -102,8 +104,8 @@
 
 				  svg.append("path")
 				      .datum(data)
-				      .attr("class", "area")
-				      .attr("d", area);
+				      .attr("class", "line")
+				      .attr("d", line);
 
 				  svg.append("g")
 				      .attr("class", "x axis")
@@ -112,7 +114,7 @@
 				      .selectAll("text")
 				      .style("text-anchor", "end")
 				      .attr("dx", "-.8em")
-				      .attr("dy", ".15.em")
+				      .attr("dy", ".15em")
 				      .attr("transform", function(d) {
 				      		return "rotate(-50)"
 				      	});

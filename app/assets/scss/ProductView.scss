@@ -52,22 +52,6 @@
 	{
 		width: 100%;
 
-		a, a:visited
-		{
-			color: $secondary-color;
-			font-weight: bold;
-
-			&:hover
-			{
-				text-decoration: underline;
-			}
-		}
-
-		p
-		{
-			text-align: center;
-		}
-
 		.button
 		{
 			margin: 8px 0.75%;
@@ -79,6 +63,30 @@
 			margin: 0 0.75%;
 			padding: 4px;
 			width: 45%;
+		}
+	}
+
+	.price_watch_confirmation
+	{
+		background: #673AB7;
+		border-radius: 4px;
+		color: #ffffff;
+		padding: 8px;
+	}
+
+	.view_on_amazon
+	{
+		text-align: center;
+
+		a, a:visited
+		{
+			color: $secondary-color;
+			font-weight: bold;
+
+			&:hover
+			{
+				text-decoration: underline;
+			}
 		}
 	}
 }

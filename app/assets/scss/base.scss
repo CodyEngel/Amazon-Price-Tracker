@@ -32,12 +32,15 @@ a
 {
     background-color: rgba(0, 0, 0, 0);
     border: 2px solid $primary-color;
-    border-radius: 3px;
+    border-radius: 4px;
     color: $primary-color;
     font-family: $content-font;
     font-weight: bold;
     padding: 8px 40px;
     transition: background-color 0.7s ease;
+
+    -webkit-appearance: none;
+
 
     &:hover
     {
