@@ -4,8 +4,8 @@ error_reporting(0);
 
 $root_directory	= "http://192.168.1.30:52990";
 
-$gmail_username = "unmarkettest";  
-$gmail_password = "usUnC9PJZk01";  
+$gmail_username = "unmarketpricealert";  
+$gmail_password = "GHFTByxzvmLh8HjdAxYJip7uB7Yc36FDiXGiHpfE";  
 
 $db_user 		= "unmarket";
 $db_password	= "Z6hjQ6mP*%rJAJhd";

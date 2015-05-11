@@ -94,10 +94,12 @@
 						{
 							array_push($wishListItemIds, $personWishListItemId);
 							// email
-							smtpmailer($resultEmailAddress, "unmarkettest@gmail.com", "Unmarket", $resultAmazonProductTitle . " IS ON SALE!", "Thank you for using UnMarket.net, we wanted to let you know your patience has paid off! It seems like only yesterday you were searching for " .
-																									$resultAmazonProductTitle . " and wanted to buy it, but didn't like the price. Well we've got great news for you. " .
-																									$resultAmazonProductTitle . " is on sale right now for $" . ($price/100) . ". We strongly recommend purchasing this item as soon as possible as Amazon may raise the price back up.
-																									You can purchase the product from the following link: http://www.amazon.com/dp/" . $amazon_asin . "/?tag=unmarket-20" );
+							smtpmailer($resultEmailAddress, "unmarketpricealert@gmail.com", "unMarket Team", $resultAmazonProductTitle . " IS ON SALE!", "Thank you for using UnMarket.net, we wanted to let you know your patience has paid off! It seems like only yesterday you were searching for " .
+																									$resultAmazonProductTitle . " and wanted to buy it. Well we've got great news for you...\n" .
+																									$resultAmazonProductTitle . " is on sale right now for $" . ($price/100) . ". We strongly recommend purchasing this item as soon as possible as Amazon may raise the price back up.\n" .
+																									"You can purchase the product from the following URL: http://www.amazon.com/dp/" . $amazon_asin . "/?tag=unmarket-20\n" .
+																									"Keep in mind that we are an Amazon affiliate and will receive a 4% - 8% commission if you purchase the product through the link. This helps support unMarket at no extra cost to you.\n" .
+																									"Best,\nBob from unMarket." );
 						}
 
 						$statement->close();

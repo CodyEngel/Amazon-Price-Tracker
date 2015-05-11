@@ -2,7 +2,7 @@
 require_once("../includes/config.php");
 $mail = new PHPMailer;
 
-smtpmailer("cengel815@gmail.com", "unmarkettest@gmail.com", "Unmarket", "TEST EMAIL", "Hey Cody, this is a test ya dumb ass.");
+smtpmailer("cengel815@gmail.com", "unmarkettest@gmail.com", "Unmarket", "TEST EMAIL", "Hey Cody, this is a test ya dumb ass.\nHere is a line break I think.");
 
 
 function smtpmailer($to, $from, $from_name, $subject, $body) { 
