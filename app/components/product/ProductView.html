@@ -12,8 +12,8 @@
         <div class="amazon_product_details_item_container">
             <h3>Price Watch</h3>
             <form class="price_watch_form" ng-submit="addPriceWatchItem(desiredPrice, email)" ng-hide="priceWatchSubmitted">
-                <input type="text" placeholder="Desired Price" class="text_field" ng-model="desiredPrice" ng-blur="formatNumber(desiredPrice)" />
-                <input type="email" placeholder="Email" class="text_field" ng-model="email" /><br/>
+                <input type="text" placeholder="Desired Price" class="text_field" ng-model="desiredPrice" ng-blur="formatNumber(desiredPrice)" required />
+                <input type="email" placeholder="Email" class="text_field" ng-model="email" required /><br/>
                 <input type="submit" value="Get Email Notifications" class="button" /><br/>
             </form>
             <p class="price_watch_confirmation" ng-show="priceWatchSubmitted">We've received your price watch request and have forwarded it along to Bob, our Amazon price guru. Bob will keep refreshing {{product.ProductTitle}}'s product listing until it drops down to (or below) ${{desiredPrice}}. So sit back, grab some Chipotle and we'll email you when it's time to buy.</p>

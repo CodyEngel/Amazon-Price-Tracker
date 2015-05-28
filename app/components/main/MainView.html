@@ -1,51 +1,77 @@
 <div id="page_wrapper">
   <div id="content_wrapper">
-    <form id="form_search" ng-submit="search(keyword, searchIndex)">
-    	<div class="input_search_area">
-	      	<select ng-model="searchIndex">
-	    		<option value="All">All</option>
-	    		<option value="Apparel">Apparel</option>
-	    		<option value="Appliances">Appliances</option>
-	    		<option value="ArtsAndCrafts">Arts and Crafts</option>
-	    		<option value="Automotive">Automotive</option>
-	    		<option value="Baby">Baby</option>
-	    		<option value="Beauty">Beauty</option>
-	    		<option value="Books">Books</option>
-	    		<option value="Classical">Classical</option>
-	    		<option value="Collectibles">Collectibles</option>
-	    		<option value="DVD">DVD</option>
-	    		<option value="DigitalMusic">Digital Music</option>
-	    		<option value="Electronics">Electronics</option>
-	    		<option value="Fashion">Fashion</option>
-	    		<option value="HealthPersonalCare">Health and Personal Care</option>
-	    		<option value="HomeGarden">Home and Garden</option>
-	    		<option value="Industrial">Industrial</option>
-	    		<option value="Jewelry">Jewelry</option>
-	    		<option value="Kitchen">Kitchen</option>
-	    		<option value="LawnAndGarden">Lawn and Garden</option>
-	    		<option value="Luggage">Luggage</option>
-	    		<option value="Music">Music</option>
-	    		<option value="OfficeProducts">Office</option>
-	    		<option value="OutdoorLiving">Outdoor Living</option>
-	    		<option value="PCHardware">PC Hardware</option>
-	    		<option value="PetSupplies">Pet Supplies</option>
-	    		<option value="Photo">Photo</option>
-	    		<option value="Shoes">Shoes</option>
-	    		<option value="Software">Software</option>
-	    		<option value="SportingGoods">Sporting Goods</option>
-	    		<option value="Tools">Tools</option>
-	    		<option value="Toys">Toys</option>
-	    		<option value="VideoGames">Video Games</option>
-	    		<option value="Watches">Watches</option>
-	    		<option value="Wireless">Wireless</option>
-	    		<option value="WirelessAccessories">Wireless Accessories</option>
-	      	</select>
-	      	<input id="input_search" placeholder="Search by product or ASIN" ng-model="keyword" />
-      	</div>
-     	<input id="button_search" class="button" type="submit" value="{{searchText}}" />
-    </form>
+    <div class="row">
+        <form class="col s12" id="form_search" ng-submit="search(keyword, searchIndex)">
+            <div class="row">
+                <div class="input-field col s12 m4 l8">
+                    <i class="mdi-action-search prefix"></i>
+                    <input id="search_input" type="text" class="validate" ng-model="keyword">
+                    <label for="search_input">Search by product or ASIN</label>
+                </div>
+                <div class="input-field col s8 m4 l2">
+                    <select class="" material-select ng-model="searchIndex">
+                        <option value="All">All</option>
+                        <option value="Apparel">Apparel</option>
+                        <option value="Appliances">Appliances</option>
+                        <option value="ArtsAndCrafts">Arts and Crafts</option>
+                        <option value="Automotive">Automotive</option>
+                        <option value="Baby">Baby</option>
+                        <option value="Beauty">Beauty</option>
+                        <option value="Books">Books</option>
+                        <option value="Classical">Classical</option>
+                        <option value="Collectibles">Collectibles</option>
+                        <option value="DVD">DVD</option>
+                        <option value="DigitalMusic">Digital Music</option>
+                        <option value="Electronics">Electronics</option>
+                        <option value="Fashion">Fashion</option>
+                        <option value="HealthPersonalCare">Health and Personal Care</option>
+                        <option value="HomeGarden">Home and Garden</option>
+                        <option value="Industrial">Industrial</option>
+                        <option value="Jewelry">Jewelry</option>
+                        <option value="Kitchen">Kitchen</option>
+                        <option value="LawnAndGarden">Lawn and Garden</option>
+                        <option value="Luggage">Luggage</option>
+                        <option value="Music">Music</option>
+                        <option value="OfficeProducts">Office</option>
+                        <option value="OutdoorLiving">Outdoor Living</option>
+                        <option value="PCHardware">PC Hardware</option>
+                        <option value="PetSupplies">Pet Supplies</option>
+                        <option value="Photo">Photo</option>
+                        <option value="Shoes">Shoes</option>
+                        <option value="Software">Software</option>
+                        <option value="SportingGoods">Sporting Goods</option>
+                        <option value="Tools">Tools</option>
+                        <option value="Toys">Toys</option>
+                        <option value="VideoGames">Video Games</option>
+                        <option value="Watches">Watches</option>
+                        <option value="Wireless">Wireless</option>
+                        <option value="WirelessAccessories">Wireless Accessories</option>
+                    </select>
+                </div>
+                <div class="input-field col s4 m4 l2">
+                    <button class="btn waves-effect waves-light" type="submit" name="action">{{searchText}}</button>
+                </div>
+            </div>
+        </form>
+    </div>
 
-    <div class="amazon_search_item_container" ng-repeat="searchResult in searchResults.data">
+    <div class="row">
+		<div class="col s12 m6 l4" ng-repeat="searchResult in searchResults.data">
+			<div class="card large">
+				<div class="card-image">
+					<img ng-src="{{searchResult.ImageURL}}">
+					<span class="card-title deep-purple">{{searchResult.ProductTitle}} - {{searchResult.FormattedPrice}}</span>
+				</div>
+				<div class="card-content">
+					<p>{{searchResult.ProductDescription}}</p>
+				</div>
+				<div class="card-action white">
+					<a ng-href="#/product/{{searchResult.ASIN}}">View Details</a>
+					<a ng-href="http://amazon.com/dp/{{product.ASIN}}/?tag=unmarket-20">View on Amazon</a>
+				</div>
+			</div>
+		</div>
+    	<!--
     	<a ng-href="#/product/{{searchResult.ASIN}}">
 			<div class="amazon_image">
 				<img ng-src="{{searchResult.ImageURL}}" />
@@ -53,7 +79,10 @@
 			</div>
 			<h2 class="amazon_title">{{searchResult.ProductTitle}}</h2>
 		</a>
+		-->
 	</div>
+
+	<i id="load_more_results" class="fa fa-plus-circle" ng-click="moreResults(keyword, searchIndex)"></i>
 
   </div>
 </div>

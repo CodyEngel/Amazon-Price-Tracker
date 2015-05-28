@@ -1,6 +1,6 @@
 (function() {
 
-    var app = angular.module("unmarket", ["ngRoute"]);
+    var app = angular.module("unmarket", ["ngRoute", "ui.materialize"]);
 
     app.config(function($routeProvider, $locationProvider) {
 

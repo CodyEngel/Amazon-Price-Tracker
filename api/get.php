@@ -4,7 +4,7 @@ require_once("../includes/config.php");
 switch($_GET["type"])
 {
 	case "search":
-		echo SearchByKeyword($_GET["keyword"], $_GET["searchIndex"]);
+		echo SearchByKeyword($_GET["keyword"], $_GET["searchIndex"], $_GET["itemPage"]);
 		break;
 	case "product":
 		echo GetProductWithid($_GET["id"]);
@@ -18,20 +18,23 @@ switch($_GET["type"])
 }
 
 /** Functions **/
-function SearchByKeyword($keyword, $searchIndex)
+function SearchByKeyword($keyword, $searchIndex, $itemPage)
 {
-	global $DBO;
-
-	if($statement = $DBO ->prepare("INSERT INTO amazon_search_log (amazon_search_log_keyword, amazon_search_log_search_index) VALUES (?, ?)"))
+	if($itemPage == 1)
 	{
-		$statement->bind_param("ss", $keyword, $searchIndex);
+		global $DBO;
 
-		$statement->execute();
+		if($statement = $DBO ->prepare("INSERT INTO amazon_search_log (amazon_search_log_keyword, amazon_search_log_search_index) VALUES (?, ?)"))
+		{
+			$statement->bind_param("ss", $keyword, $searchIndex);
 
-		$statement->close();
+			$statement->execute();
+
+			$statement->close();
+		}
 	}
-
-	$amazonSearch = new AmazonSearch($keyword, $searchIndex);
+	
+	$amazonSearch = new AmazonSearch($keyword, $searchIndex, $itemPage);
 	return json_encode(array("data" => $amazonSearch->SearchResultItems));
 }
 

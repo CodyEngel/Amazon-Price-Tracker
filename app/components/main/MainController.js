@@ -6,6 +6,9 @@
 
 		$scope.searchText = "Search";
 		$scope.searchIndex = "All";
+		$scope.itemPage = 1;
+
+		$scope.searchResults = []
 
 		var getSearchResults = function(keyword, searchIndex) {
 			return $http.get("/api/get.php?type=search&keyword=" + keyword + "&searchIndex=" + searchIndex)
@@ -14,10 +17,22 @@
 					});
 		};
 
+		var getMoreSearchResults = function(keyword, searchIndex) {
+			return $http.get("/api/get.php?type=search&keyword=" + keyword + "&searchIndex=" + searchIndex + "&itemPage=" + $scope.itemPage)
+					.then(function(response) {
+						return response.data;
+					});
+		};
+
 		var onSearchResults = function(data) {
 			$scope.searchResults = data;
 			$scope.searchText = "Search";
-			console.dir($scope.searchResults);
+			$scope.itemPage++;
+		};
+
+		var onMoreSearchResults = function(data) {
+			$scope.searchResults.push(data);
+			$scope.itemPage++;
 		};
 
 		var onError = function(reason) {
@@ -31,10 +46,15 @@
 				$location.path("/product/" + match[4]);
 			}
 			else {
+				$scope.itemPage = 1;
 				$scope.searchText = "Searching...";
 				getSearchResults(keyword, searchIndex).then(onSearchResults, onError);
 			}
 		};
+
+		$scope.moreResults = function(keyword, searchIndex) {
+			getMoreSearchResults(keyword, searchIndex).then(onMoreSearchResults);
+		}
 
 	};
   
