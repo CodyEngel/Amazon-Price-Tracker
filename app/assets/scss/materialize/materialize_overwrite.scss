@@ -1,10 +1,10 @@
 /*** Colors ***/
-$primary-color: color("deep-purple", "base");
-$primary-color-light: color("deep-purple", "lighten-3");
-$primary-color-dark: color("deep-purple", "darken-3");
+$primary-color: color("blue", "base");
+$primary-color-light: color("blue", "lighten-3");
+$primary-color-dark: color("blue", "darken-3");
 
-$secondary-color: color("indigo", "lighten-2") ;
-$success-color: color("amber", "base") ;
+$secondary-color: color("orange", "base") ;
+$success-color: color("orange", "base") ;
 $error-color: color("red", "base") ;
 $link-color: $secondary-color;
 

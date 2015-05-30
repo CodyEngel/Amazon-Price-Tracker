@@ -1,5 +1,68 @@
 <div id="page_wrapper">
     <div id="content_wrapper">
+        <!--
+        <div class="row">
+            <div class="col s12 m6 l4" ng-repeat="searchResult in searchResults.data">
+                <div class="card large">
+                    <div class="card-image">
+                        <img ng-src="{{searchResult.ImageURL}}">
+                        <span class="card-title blue">{{searchResult.FormattedPrice}}</span>
+                    </div>
+                    <div class="card-content">
+                        <span class="card-title activator grey-text text-darken-4">{{searchResult.ProductTitle}} <i class="mdi-navigation-more-vert right"></i></span>
+                    </div>
+                    <div class="card-reveal">
+                        <span class="card-title grey-text text-darken-4">{{searchResult.ProductTitle}} <i class="mdi-navigation-close right"></i></span>
+                        <p>{{searchResult.ProductDescription}}</p>
+                    </div>
+                    <div class="card-action white">
+                        <a ng-href="#/product/{{searchResult.ASIN}}">View Details</a>
+                        <a ng-href="http://amazon.com/dp/{{product.ASIN}}/?tag=unmarket-20">View on Amazon</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        -->
+        <div class="row">
+            <div class="row" style="margin: 1.78rem 0 1.424rem 0;">
+                <h2 class="col s12 m8 l8" style="margin: 0;">{{product.ProductTitle}}</h2>
+                <a ng-href="http://amazon.com/dp/{{product.ASIN}}/?tag=unmarket-20" title="View on Amazon" class="waves-effect waves-light btn-large col s12 m2 l2"><i class="mdi-action-store left"></i>View on Amazon</a>
+            </div>
+
+            <div class="col s12 m6 l6">
+                <div class="card">
+                    <div class="card-image">
+                        <img ng-src="{{product.ImageURL}}" />
+                        <span class="card-title blue">{{product.FormattedPrice}}</span>
+                    </div>
+                    <div class="card-content">
+                        {{product.ProductDescription}}
+                    </div>
+                </div>
+            </div>
+            <div class="col s12 m6 l6">
+                <div class="card">
+                    <h3>Price Watch</h3>
+                    <form class="row" ng-submit="addPriceWatchItem(desiredPrice, email)" ng-hide="priceWatchSubmitted">
+                        <div class="input-field col s12 m4 l4">
+                            <input id="desired_price_input" type="text" class="validate" ng-model="desiredPrice" ng-blur="formatNumber(desiredPrice)" required />
+                            <label for="desired_price_input">Desired Price</label>
+                        </div>
+                        <div class="input-field col s12 m4 l4">
+                            <input id="email_input" type="email" class="validate" ng-model="email" required />
+                            <label for="email_input">Email</label>
+                        </div>
+                        <div class="input-field col s12 m4 l4">
+                            <button type="submit" class="btn waves-effect waves-light">Submit <i class="mdi-content-send right"></i></button>
+                        </div>
+                    </form>
+                    <p class="" ng-show="priceWatchSubmitted">We've received your price watch request and have forwarded it along to Bob, our Amazon price guru. Bob will keep refreshing {{product.ProductTitle}}'s product listing until it drops down to (or below) ${{desiredPrice}}. So sit back, grab some Chipotle and we'll email you when it's time to buy.</p>
+                    <div linear-chart chart-data="priceHistory" ASIN="{{product.ASIN}}"></div>
+                </div>
+            </div>
+        </div>
+
+        <!--
         <h2>{{product.ProductTitle}} - {{product.ASIN}}</h2>
         <div class="amazon_product_details_item_container no_padding">
             <a ng-href="http://amazon.com/dp/{{product.ASIN}}/?tag=unmarket-20" title="View on Amazon">
@@ -25,5 +88,6 @@
             <h3>Price History</h3>
             <div linear-chart chart-data="priceHistory" ASIN="{{product.ASIN}}"></div>
         </div>
+        -->
     </div>
 </div>

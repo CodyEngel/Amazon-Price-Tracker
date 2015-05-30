@@ -1,8 +1,9 @@
 <?php
 	set_time_limit(0);
 	ignore_user_abort(true);
-	require_once("/simple_html_dom.php");
-	require_once("../includes/config.php");
+	require_once("simple_html_dom.php");
+	require_once("config.php");
+	//error_reporting(-1);
 
 	/*
 		amazon_product_price
@@ -39,18 +40,24 @@
 	{
 	}
 
+	echo "Total Products: " . count($amazon_asin_array);
+	$product_count = 0;
+
 	foreach($amazon_asin_array AS $amazon_asin)
 	{
+		$product_count += 1;
+		echo "\nThis is product #" . $product_count;
+
 		$count = 0;
 		while($count < 5)
 		{
 			$html = file_get_html($amazon_url . $amazon_asin);
 			$count++;
 
-			// <span class="a-size-medium a-color-price">$21.14</span>
-			// <span class="a-size-medium a-color-price offer-price a-text-normal">$13.10</span>
 			if($html)
 			{
+				$price = "";
+				/*
 				$price = $html->find("span[class=offer-price", 0)->plaintext;
 				
 				if($price == "")
@@ -66,6 +73,24 @@
 						}
 					}
 				}
+				*/
+				if($html->find("span[class=offer-price", 0))
+		        {
+		            $price = $html->find("span[class=offer-price", 0)->plaintext;
+		        }
+		        else if($html->find("b[class=priceLarge]", 0))
+		        {
+		            $price = $html->find("b[class=priceLarge]", 0)->plaintext;
+		        }
+		        else if($html->find("span[class=a-color-price]", 0))
+		        {
+		            $price = $html->find("span[class=a-color-price]", 0)->plaintext;
+		        }
+		        else if($html->find("span[id=priceblock_ourprice]", 0))
+		        {
+		            $price = $html->find("span[id=priceblock_ourprice]", 0)->plaintext;
+		        }
+
 				if($price != "")
 				{
 					$price = extract_numbers($price);
@@ -101,7 +126,6 @@
 																									"Keep in mind that we are an Amazon affiliate and will receive a 4% - 8% commission if you purchase the product through the link. This helps support unMarket at no extra cost to you.\n" .
 																									"Best,\nBob from unMarket." );
 						}
-
 						$statement->close();
 					}
 
@@ -122,13 +146,20 @@
 						$insert_statement->execute();
 
 						$insert_statement->close();
+
+						echo "\n" . $amazon_asin . " was inserted into the database. It was item #" . $product_count;
 					}
+					break; // page was loaded, we can successfully break
 				}
-				break; // page was loaded, we can successfully break
+				echo "\nThe price wasn't available, will try again soon.";
+				sleep(1);
+				echo "\nDone sleeping, time to try getting the price again.";
 			}
 			else
 			{
-				usleep(500000);
+				echo "\nUnable to download HTML, will try again soon.";
+				sleep(2);
+				echo "\nDone sleeping, time to try downloading HTML again.";
 			}
 		}
 	}

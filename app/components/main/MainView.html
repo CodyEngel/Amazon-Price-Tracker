@@ -60,9 +60,13 @@
 			<div class="card large">
 				<div class="card-image">
 					<img ng-src="{{searchResult.ImageURL}}">
-					<span class="card-title deep-purple">{{searchResult.ProductTitle}} - {{searchResult.FormattedPrice}}</span>
+					<span class="card-title blue">{{searchResult.FormattedPrice}}</span>
 				</div>
 				<div class="card-content">
+					<span class="card-title activator grey-text text-darken-4">{{searchResult.ProductTitle}} <i class="mdi-navigation-more-vert right"></i></span>
+				</div>
+				<div class="card-reveal">
+					<span class="card-title grey-text text-darken-4">{{searchResult.ProductTitle}} <i class="mdi-navigation-close right"></i></span>
 					<p>{{searchResult.ProductDescription}}</p>
 				</div>
 				<div class="card-action white">
@@ -71,18 +75,9 @@
 				</div>
 			</div>
 		</div>
-    	<!--
-    	<a ng-href="#/product/{{searchResult.ASIN}}">
-			<div class="amazon_image">
-				<img ng-src="{{searchResult.ImageURL}}" />
-				<h4 class="amazon_price">{{searchResult.FormattedPrice}}</h4>
-			</div>
-			<h2 class="amazon_title">{{searchResult.ProductTitle}}</h2>
-		</a>
-		-->
 	</div>
 
-	<i id="load_more_results" class="fa fa-plus-circle" ng-click="moreResults(keyword, searchIndex)"></i>
+	<!--<i id="load_more_results" class="fa fa-plus-circle" ng-click="moreResults(keyword, searchIndex)"></i>-->
 
   </div>
 </div>
