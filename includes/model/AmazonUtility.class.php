@@ -5,9 +5,9 @@
 
 class AmazonUtility
 {
-	private static $AWSAccessKey = "AKIAID2CEVR3KNVUC4TA";
-	private static $AWSSecretKey = "Ezr548TgoYWB+x3ocFRPAkjqr8o/tI58L7pf5T7K";
-	private static $AWSAssociateTag = "refact-20";
+	private static $AWSAccessKey = "YOURACCESSKEY";
+	private static $AWSSecretKey = "YOURSECRETKEY";
+	private static $AWSAssociateTag = "YOURASSOCIATETAG";
 	
 	public static function ItemLookup($item_id)
 	{
